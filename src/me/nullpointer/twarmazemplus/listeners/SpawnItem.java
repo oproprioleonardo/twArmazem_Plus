@@ -33,7 +33,7 @@ public class SpawnItem implements Listener {
                     final Armazem armazem = PlayerCACHE.get(p.getName());
                     for (DropPlayer dropPlayer : armazem.getDropPlayers()) {
                         final Drop drop = DropCACHE.get(dropPlayer.getKeyDrop());
-                        if (drop.getType().equals(DropType.BREAK) && drop.getDrop().isSimilar(itemStack)) {
+                        if (drop.getType().equals(DropType.PLOT_DROP) && drop.getDrop().isSimilar(itemStack)) {
                             if (!armazem.isMax()) {
                                 Double multiplier = armazem.getMultiplier();
                                 for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
