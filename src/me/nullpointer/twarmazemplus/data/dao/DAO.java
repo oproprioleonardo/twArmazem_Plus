@@ -1,13 +1,15 @@
 package me.nullpointer.twarmazemplus.data.dao;
 
-public interface DAO {
+import java.sql.SQLException;
+
+public interface DAO<B,T> {
 
     void createTable();
     void saveAll();
     void loadAll();
-    void load();
-    void save();
-    void delete();
-    boolean exists();
+    void load(B object) throws SQLException;
+    void save(T object);
+    void delete(B object);
+    boolean exists(B object);
 
 }

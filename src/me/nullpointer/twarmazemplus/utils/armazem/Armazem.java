@@ -1,4 +1,4 @@
-package me.nullpointer.twarmazemplus.utils;
+package me.nullpointer.twarmazemplus.utils.armazem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,6 +21,22 @@ public class Armazem {
         this.boostersActive = boostersActive;
         this.dropPlayers = dropPlayers;
         this.friends = friends;
+    }
+
+    public Double getAmountAll(){
+        Double amountAll = 0D;
+        for (DropPlayer dropPlayer : getDropPlayers()) {
+            amountAll+=dropPlayer.getDropAmount();
+        }
+        return amountAll;
+    }
+
+    public boolean isMax(){
+        return getAmountAll() >= getLimit();
+    }
+
+    public boolean isMax(Double amount){
+        return getAmountAll() + amount > getLimit();
     }
 
     public String getOwner() {

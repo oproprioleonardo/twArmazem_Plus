@@ -1,6 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
-import me.nullpointer.twarmazemplus.utils.Booster;
+import me.nullpointer.twarmazemplus.utils.armazem.supliers.Booster;
 
 import java.util.ArrayList;
 import java.util.List;

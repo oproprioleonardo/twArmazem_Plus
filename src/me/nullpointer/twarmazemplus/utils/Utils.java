@@ -65,13 +65,21 @@ public class Utils {
         return getCorrectDropAmount(generateRandom(mobAmount), killer);
     }
 
-    public static Double generateRandom(final Double mobAmount) {
-        return Math.ceil(rand.nextDouble(1.0, 5.0) * mobAmount);
+    public static Double generateRandom(final Double amount) {
+        return Math.ceil(rand.nextDouble(1.0, 5.0) * amount);
     }
 
     public static Double getCorrectDropAmount(final Double randomAmount, final Player killer) {
         return 0.0 + Math.round(randomAmount * ((rand.nextInt(killer.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS) + 1) + 2) / 1.75));
     }
+
+    public static int getFortune(Player p) {
+        if (p.getItemInHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+            return rand.nextInt(p.getItemInHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)) + 1;
+        }
+        return 1;
+    }
+
 
     public static void sendActionBar(final Player p, final String text) {
         final PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + text + "\"}"), (byte) 2);

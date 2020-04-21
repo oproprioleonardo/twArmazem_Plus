@@ -1,26 +1,32 @@
+MySQL:
+  Password: '123'
+  User: "root"
+  Host: "localhost"
+  Port: '3306'
+  Database: "twmobcoins"
 Messages:
   permission-error: "&cVocê não tem permissão para utilizar tal sistema/comando."
   sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
   limit-used: "&aVocê utilizou o limite ({limit-value}) e agora está com {player-limit-vale}."
-Format:
-  - ",1.0"
-  - "K,1000.0"
-  - "M,1000000.0"
-  - "B,1000000000.0"
-  - "T,1000000000000.0"
-  - "QA,1000000000000.0"
-  - "QI,1000000000000000.0"
-  - "SEX,1000000000000000000.0"
-  - "SEP,1000000000000000000000.0"
 Settings:
   #NÃO SUPORTA KILL-STEP
-  stack-mobs: JH_StackMobs #O plugin suporta jh_stackmobs e stackmobs (spigot)
+  stack-mobs: JH_StackMobs #O plugin suporta "JH_StackMobs" e "StackMobs" (spigot)
   break: true
   kill: true
   plot-drop: true
   friends:
     toggle: true
     max: 5
+  format:
+    - ",1.0"
+    - "K,1000.0"
+    - "M,1000000.0"
+    - "B,1000000000.0"
+    - "T,1000000000000.0"
+    - "QA,1000000000000.0"
+    - "QI,1000000000000000.0"
+    - "SEX,1000000000000000000.0"
+    - "SEP,1000000000000000000000.0"
 Limits:
   default:
     - "member.vip.prime:100000"
@@ -55,7 +61,7 @@ Drops:
   dropOne:
     id: 56
     data: 0
-    unit-sales-value: 100M
+    unit-sales-value: "100M"
     type: BREAK #suporta BREAK, PLOT_DROP, KILL
     drop-item-menu:
       id: 56
@@ -70,7 +76,7 @@ Drops:
     id: 277
     data: 0
     mob: ZOMBIE
-    unit-sales-value: 100M,10K
+    unit-sales-value: "100M,10K"
     type: KILL
     drop-item-menu:
       id: 277
@@ -84,7 +90,7 @@ Drops:
   dropThree:
     id: 81
     data: 0
-    unit-sales-value: 100B,10M,10K,550
+    unit-sales-value: "100B,10M,10K"
     type: PLOT_DROP
     drop-item-menu:
       id: 81

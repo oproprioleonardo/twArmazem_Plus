@@ -1,18 +1,21 @@
 package me.nullpointer.twarmazemplus.data;
 
+import me.nullpointer.twarmazemplus.api.API;
+import me.nullpointer.twarmazemplus.utils.Configuration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectionFactory {
 
-    /*
     public static Connection make() {
         try {
-            String password = Main.cf.getString("MySQL.Password");
-            String user = Main.cf.getString("MySQL.User");
-            String host = Main.cf.getString("MySQL.Host");
-            String port = Main.cf.getString("MySQL.Port");
-            String database = Main.cf.getString("MySQL.Database");
+            final Configuration configuration = API.getConfiguration();
+            String password = configuration.get("MySQL.Password", false);
+            String user = configuration.get("MySQL.User", false);
+            String host = configuration.get("MySQL.Host", false);
+            String port = configuration.get("MySQL.Port", false);
+            String database = configuration.get("MySQL.Database", false);
             String type = "jdbc:mysql://";
             String url = type + host + ":" + port + "/" + database;
             return DriverManager.getConnection(url, user, password);
@@ -21,6 +24,5 @@ public class ConnectionFactory {
         }
         return null;
     }
-     */
 
 }

@@ -1,4 +1,4 @@
-package me.nullpointer.twarmazemplus.utils;
+package me.nullpointer.twarmazemplus.utils.armazem;
 
 public class BoosterPlayer {
 

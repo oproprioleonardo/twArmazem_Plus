@@ -1,6 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
-import me.nullpointer.twarmazemplus.utils.Limit;
+import me.nullpointer.twarmazemplus.utils.armazem.supliers.Limit;
 
 import java.util.ArrayList;
 import java.util.List;

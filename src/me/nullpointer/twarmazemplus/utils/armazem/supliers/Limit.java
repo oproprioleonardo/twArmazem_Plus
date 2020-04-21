@@ -1,4 +1,4 @@
-package me.nullpointer.twarmazemplus.utils;
+package me.nullpointer.twarmazemplus.utils.armazem.supliers;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
