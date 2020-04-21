@@ -7,10 +7,7 @@ import me.nullpointer.twarmazemplus.cache.DropCACHE;
 import me.nullpointer.twarmazemplus.cache.LimitsCACHE;
 import me.nullpointer.twarmazemplus.data.dao.ManagerDAO;
 import me.nullpointer.twarmazemplus.enums.DropType;
-import me.nullpointer.twarmazemplus.listeners.BreakBlock;
-import me.nullpointer.twarmazemplus.listeners.KillMob;
-import me.nullpointer.twarmazemplus.listeners.SaveEvents;
-import me.nullpointer.twarmazemplus.listeners.SpawnItem;
+import me.nullpointer.twarmazemplus.listeners.*;
 import me.nullpointer.twarmazemplus.utils.*;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Booster;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
@@ -39,7 +36,10 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SaveEvents(), this);
         final Settings settings = API.getSettings();
         if (settings.isBreakBlock()) Bukkit.getPluginManager().registerEvents(new BreakBlock(), this);
-        if (settings.isKillMob()) Bukkit.getPluginManager().registerEvents(new KillMob(), this);
+        if (settings.isKillMob()) {
+            Bukkit.getPluginManager().registerEvents(new KillMob(), this);
+            Bukkit.getPluginManager().registerEvents(new AntiLag(), this);
+        }
         if (settings.isPlotDrop()) Bukkit.getPluginManager().registerEvents(new SpawnItem(), this);
 
     }

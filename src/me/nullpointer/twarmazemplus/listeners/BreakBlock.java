@@ -28,7 +28,7 @@ public class BreakBlock implements Listener {
                 if (!armazem.isMax()){
                     Double multiplier = armazem.getMultiplier();
                     for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) { multiplier += boosterPlayer.getMultiplier(); }
-                    final Double add = 0D + block.getDrops().size() * Utils.getFortune(p) * multiplier;
+                    final Double add = Math.floor(0D + block.getDrops().size() * Utils.getFortune(p) * multiplier);
                     if (armazem.isMax(add)) dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                     else dropPlayer.addDropAmount(add);
                 }

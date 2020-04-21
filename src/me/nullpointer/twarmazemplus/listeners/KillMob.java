@@ -50,7 +50,7 @@ public class KillMob implements Listener {
                         for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
                             multiplier += boosterPlayer.getMultiplier();
                         }
-                        final Double add = Utils.multiplyDrops(p, getMobAmount(mob)) * multiplier;
+                        final Double add = Math.floor(Utils.multiplyDrops(p, getMobAmount(mob)) * multiplier);
                         if (armazem.isMax(add))
                             dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                         else dropPlayer.addDropAmount(add);
