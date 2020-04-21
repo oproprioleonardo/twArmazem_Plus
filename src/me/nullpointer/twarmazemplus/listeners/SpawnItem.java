@@ -1,4 +1,6 @@
 package me.nullpointer.twarmazemplus.listeners;
 
-public class SpawnItem {
+import org.bukkit.event.Listener;
+
+public class SpawnItem implements Listener {
 }

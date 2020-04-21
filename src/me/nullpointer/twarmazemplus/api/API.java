@@ -19,4 +19,8 @@ public class API {
     public static Configuration getConfiguration() {
         return configuration;
     }
+
+    public static Settings getSettings() {
+        return settings;
+    }
 }

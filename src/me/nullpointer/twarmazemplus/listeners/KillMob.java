@@ -1,4 +1,64 @@
 package me.nullpointer.twarmazemplus.listeners;
 
-public class KillMob {
+import me.nullpointer.twarmazemplus.api.API;
+import me.nullpointer.twarmazemplus.cache.DropCACHE;
+import me.nullpointer.twarmazemplus.cache.PlayerCACHE;
+import me.nullpointer.twarmazemplus.enums.DropType;
+import me.nullpointer.twarmazemplus.enums.StackMob;
+import me.nullpointer.twarmazemplus.utils.Settings;
+import me.nullpointer.twarmazemplus.utils.Utils;
+import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
+import me.nullpointer.twarmazemplus.utils.armazem.BoosterPlayer;
+import me.nullpointer.twarmazemplus.utils.armazem.DropPlayer;
+import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+
+public class KillMob implements Listener {
+
+    public static Double getMobAmount(Entity entity) {
+        final Settings settings = API.getSettings();
+        if (settings.getStackMob().equals(StackMob.StackMobs)) {
+            if (entity.hasMetadata("JH_StackMobs")) {
+                return 0D + entity.getMetadata("JH_StackMobs").get(0).asInt();
+            }
+        }
+        if (settings.getStackMob().equals(StackMob.JH_StackMobs)) {
+            if (entity.hasMetadata("stackmob:stack-size")) {
+                return 0D + entity.getMetadata("stackmob:stack-size").get(0).asInt();
+            }
+        }
+        return 1D;
+    }
+
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void kill(EntityDeathEvent e) {
+        if (e.getEntity().getKiller() != null) {
+            final Player p = e.getEntity().getKiller();
+            final Entity mob = e.getEntity();
+            final Armazem armazem = PlayerCACHE.get(p.getName());
+            for (DropPlayer dropPlayer : armazem.getDropPlayers()) {
+                final Drop drop = DropCACHE.get(dropPlayer.getKeyDrop());
+                if (drop.getType().equals(DropType.KILL) && drop.getEntityType().equals(mob.getType())) {
+                    if (!armazem.isMax()) {
+                        Double multiplier = armazem.getMultiplier();
+                        for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
+                            multiplier += boosterPlayer.getMultiplier();
+                        }
+                        final Double add = Utils.multiplyDrops(p, getMobAmount(mob)) * multiplier;
+                        if (armazem.isMax(add))
+                            dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
+                        else dropPlayer.addDropAmount(add);
+                    }
+                    e.getDrops().clear();
+                    return;
+                }
+            }
+        }
+    }
 }
