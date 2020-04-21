@@ -1,0 +1,100 @@
+Messages:
+  permission-error: "&cVocê não tem permissão para utilizar tal sistema/comando."
+  sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
+  limit-used: "&aVocê utilizou o limite ({limit-value}) e agora está com {player-limit-vale}."
+Format:
+  - ",1.0"
+  - "K,1000.0"
+  - "M,1000000.0"
+  - "B,1000000000.0"
+  - "T,1000000000000.0"
+  - "QA,1000000000000.0"
+  - "QI,1000000000000000.0"
+  - "SEX,1000000000000000000.0"
+  - "SEP,1000000000000000000000.0"
+Settings:
+  #NÃO SUPORTA KILL-STEP
+  stack-mobs: JH_StackMobs #O plugin suporta jh_stackmobs e stackmobs (spigot)
+  break: true
+  kill: true
+  plot-drop: true
+  friends:
+    toggle: true
+    max: 5
+Limits:
+  default:
+    - "member.vip.prime:100000"
+    - "member.member:1000"
+  max: 100000000000 #Retire essa área para infinito
+  list: #Crie quantos quiser
+    item-one:
+      id: 1
+      data: 0
+      name: "&eLimite de venda"
+      lore:
+      - "&eUtilize-me para aumentar seu"
+      - "&elimite de venda."
+      value: 10000 #aumenta em 10 mil
+      permission: "member.permission" # pode ou não usar
+Boosters:
+  default:
+    - "member.vip.prime:2.0"
+    - "member.member:1.0"
+  list:
+    bs1:
+      multiplier: 1.5
+      time: 300 #segundos// exclua essa seção para infinito
+      permission: "member.permission" #pode ou não usar
+      name: "&aBooster"
+      id: 1
+      data: 0
+      lore:
+        - ""
+        - "&aBooster 1.5x"
+Drops:
+  dropOne:
+    id: 56
+    data: 0
+    unit-sales-value: 100M
+    type: BREAK #suporta BREAK, PLOT_DROP, KILL
+    drop-item-menu:
+      id: 56
+      data: 0
+      name: "&bDiamante"
+      lore:
+      - "&ePreço unitário: {price-sell-unit}"
+      - "&eQuantidade: {amount}"
+      - "&ePreço de venda: {price-sell-all}"
+      amount: 1
+  dropTwo:
+    id: 277
+    data: 0
+    mob: ZOMBIE
+    unit-sales-value: 100M,10K
+    type: KILL
+    drop-item-menu:
+      id: 277
+      data: 0
+      name: "&eCarne de Zumbi"
+      lore:
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
+      amount: 2
+  dropThree:
+    id: 81
+    data: 0
+    unit-sales-value: 100B,10M,10K,550
+    type: PLOT_DROP
+    drop-item-menu:
+      id: 81
+      data: 0
+      name: "&2Cacto"
+      lore:
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
+      amount: 3
+
+
+
