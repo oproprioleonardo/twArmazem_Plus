@@ -1,6 +1,8 @@
 package me.nullpointer.twarmazemplus.utils.armazem;
 
 import me.nullpointer.twarmazemplus.Main;
+import me.nullpointer.twarmazemplus.cache.DropC;
+import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -31,6 +33,16 @@ public class Armazem {
             amountAll+=dropPlayer.getDropAmount();
         }
         return amountAll;
+    }
+
+
+    public Double getPriceAll(){
+        double priceAll = 0D;
+        for (DropPlayer dropPlayer : dropPlayers) {
+            final Drop drop = DropC.get(dropPlayer.getKeyDrop());
+            priceAll += drop.getUnitPrice() * dropPlayer.getDropAmount();
+        }
+        return priceAll;
     }
 
     public boolean isMax(){
@@ -67,6 +79,10 @@ public class Armazem {
 
     public void setMultiplier(Double multiplier) {
         this.multiplier = multiplier;
+    }
+
+    public void addMultiplier(Double multiplier) {
+        this.multiplier += multiplier;
     }
 
     public Double getMultiplierBoosters(){

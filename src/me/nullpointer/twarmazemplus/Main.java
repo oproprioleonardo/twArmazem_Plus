@@ -4,6 +4,9 @@ import me.nullpointer.twarmazemplus.api.API;
 import me.nullpointer.twarmazemplus.cache.BoosterC;
 import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.cache.LimitsC;
+import me.nullpointer.twarmazemplus.commands.CmdBooster;
+import me.nullpointer.twarmazemplus.commands.CmdLimit;
+import me.nullpointer.twarmazemplus.commands.CmdSell;
 import me.nullpointer.twarmazemplus.data.dao.ManagerDAO;
 import me.nullpointer.twarmazemplus.enums.DropType;
 import me.nullpointer.twarmazemplus.listeners.*;
@@ -11,19 +14,24 @@ import me.nullpointer.twarmazemplus.utils.*;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Booster;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Limit;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
     public static Main instance;
+    public static Economy economy = null;
 
     @Override
     public void onEnable() {
         instance = this;
+        economy = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class).getProvider();
         new API();
         final Configuration configuration = API.getConfiguration();
         loadDrops(configuration);
@@ -42,7 +50,9 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new AntiLag(), this);
         }
         if (settings.isPlotDrop()) Bukkit.getPluginManager().registerEvents(new SpawnItem(), this);
-
+        ((CraftServer) this.getServer()).getCommandMap().register("limitedevenda", new CmdLimit());
+        ((CraftServer) this.getServer()).getCommandMap().register("booster", new CmdBooster());
+        ((CraftServer)this.getServer()).getCommandMap().register("vender", new CmdSell());
     }
 
     @Override

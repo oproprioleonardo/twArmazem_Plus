@@ -8,10 +8,20 @@ Messages:
   permission-error: "&cVocê não tem permissão para executar tal ação."
   permission-error-limit: "&cVocê não tem permissão para usar esse ativador de limite de venda."
   permission-error-booster: "&cVocê não tem permissão para utilizar esse booster."
-  sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
+  player-offline: "&cO jogador se encontra offline."
+  number-invalid: "&cEsse número é inválido."
   limit-used: "&aVocê adicionou ({limit-value}) ao limite de venda e agora está com {player-limit-value}."
   limit-max: "&cVocê ja atingiu o limite máximo de venda!"
+  limit-view: "&aO seu limite de vendas é de {limit}."
+  limit-not-found: "&aO ID {type} não é um limite de venda."
+  limit-gived: "&aVocê entregou o limite de venda {type} para o jogador {player}."
+  booster-used: "&aVocê ativou um multiplicador de drops ({multiplier}) pelo tempo ({time})."
+  booster-view: "&aSeu multiplicador no momento é de: {multiplier}"
+  booster-not-found: "&cTipo de booster não encontrado."
+  booster-gived: "&aVocê entregou o booster {type} para o jogador {player}."
   drops-add: "&6&lDROPS &f-> &aForam adicionados {amount} drops de {drop-type} em seu armazém."
+  drops-sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
+  drops-sellall: "&aVocê vendeu todos os {amount}x itens por &2R$ &f{price}&a."
   armazem-max: "&6&lDROPS &f-> &cSeu armazém está cheio, venda os itens acumulados!"
 Settings:
   #NÃO SUPORTA KILL-STEP
@@ -107,6 +117,41 @@ Drops:
         - "&eQuantidade: {amount}"
         - "&ePreço de venda: {price-sell-all}"
       amount: 3
+Inventory:
+  sell:
+    name: "&aMenu de vendas."
+    rows: 6
+    slotsDropSell: ""
+    items:
+      playerStats:
+        slot: 4 #válido a primeira e a última row
+        id: 397
+        data: 3
+        skull-owner: "{playername}"
+        name: "&e{playername}"
+        lore:
+          - "&fLimite de Venda: &7{limit}"
+          - "&fBooster de Drops: &7{multiplier}"
+      sellAll:
+        slot: 51 #válido a primeira e a última row
+        id: 339
+        data: 0
+        name: "&eVender tudo"
+        lore:
+          - "&aClique aqui para vender {drops}"
+          - "&apor &2R$ &f{total}&a."
+      autoSell:
+        slot: 47 #válido a primeira e a última row
+        id: 154
+        data: 0
+        name: "&aAuto vender"
+        lore:
+          - "&eEstado: {state}"
+          - "&aClique para {future-state} a"
+          - "&aAuto-venda;"
+
+
+
 
 
 

@@ -5,6 +5,7 @@ import me.nullpointer.twarmazemplus.cache.BoosterC;
 import me.nullpointer.twarmazemplus.cache.LimitsC;
 import me.nullpointer.twarmazemplus.cache.PlayerC;
 import me.nullpointer.twarmazemplus.utils.Configuration;
+import me.nullpointer.twarmazemplus.utils.FormatTime;
 import me.nullpointer.twarmazemplus.utils.Settings;
 import me.nullpointer.twarmazemplus.utils.Utils;
 import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
@@ -51,11 +52,19 @@ public class Interact implements Listener {
             if (!item.isSimilar(booster.getItem())) continue;
             final Armazem armazem = PlayerC.get(p.getName());
             final Configuration configuration = API.getConfiguration();
-            if (!booster.hasPermission(p)){
+            if (!booster.hasPermission(p)) {
                 p.sendMessage(configuration.getMessage("permission-error-booster"));
                 return;
             }
-            armazem.addBooster(new BoosterPlayer(booster.getMultiplier(), booster.getTime()));
+            if (booster.getTime() == 0) {
+                armazem.addMultiplier(booster.getMultiplier());
+                p.sendMessage(configuration.getMessage("booster-used").replace("{time}", "infinito").replace("{multiplier}", booster.getMultiplier().toString()));
+            } else {
+                armazem.addBooster(new BoosterPlayer(booster.getMultiplier(), booster.getTime()));
+                p.sendMessage(configuration.getMessage("booster-used").replace("{time}", new FormatTime(booster.getTime()).format()).replace("{multiplier}", booster.getMultiplier().toString()));
+            }
+            if (item.getAmount() > 1) item.setAmount(item.getAmount() - 1);
+            else p.setItemInHand(new ItemStack(Material.AIR));
             return;
         }
     }

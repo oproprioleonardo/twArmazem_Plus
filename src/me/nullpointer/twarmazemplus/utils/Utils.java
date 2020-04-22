@@ -6,6 +6,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -86,4 +87,29 @@ public class Utils {
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
     }
 
+    /**
+     * @param p         Player online!
+     * @param itemStack Hรก suporte para todos os itens
+     */
+    public static void giveItem(final Player p, final ItemStack itemStack) {
+        int amount = itemStack.getAmount();
+        int stackMax = itemStack.getMaxStackSize();
+        for (ItemStack itemStack1 : p.getInventory().getContents()) {
+            if (itemStack1 == null) continue;
+            if (amount == 0) return;
+            if (itemStack.isSimilar(itemStack1) && itemStack1.getAmount() < stackMax) {
+                if (itemStack1.getAmount() + amount <= stackMax) {
+                    itemStack1.setAmount(itemStack1.getAmount() + amount);
+                    break;
+                }
+                int add = amount - (amount + itemStack1.getAmount() - stackMax);
+                itemStack1.setAmount(stackMax);
+                amount -= add;
+            }
+        }
+        itemStack.setAmount(amount);
+        if (p.getInventory().firstEmpty() != -1) {
+            p.getInventory().addItem(itemStack);
+        } else p.getWorld().dropItem(p.getLocation(), itemStack);
+    }
 }
