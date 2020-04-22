@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.utils.armazem.supliers;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Booster {
@@ -36,5 +37,14 @@ public class Booster {
 
     public String getPermission() {
         return permission;
+    }
+
+    public boolean hasPermission() {
+        return permission.equalsIgnoreCase("");
+    }
+
+    public boolean hasPermission(Player p){
+        if (!hasPermission()) return true;
+        return p.hasPermission(getPermission());
     }
 }

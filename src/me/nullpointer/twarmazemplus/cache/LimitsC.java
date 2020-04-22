@@ -5,7 +5,7 @@ import me.nullpointer.twarmazemplus.utils.armazem.supliers.Limit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LimitsCACHE {
+public class LimitsC {
 
     public static List<Limit> limits = new ArrayList<>();
 

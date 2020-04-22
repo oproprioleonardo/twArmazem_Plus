@@ -1,8 +1,10 @@
 package me.nullpointer.twarmazemplus.utils.armazem;
 
+import me.nullpointer.twarmazemplus.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Armazem {
@@ -56,6 +58,10 @@ public class Armazem {
     }
 
     public Double getMultiplier() {
+        return multiplier + getMultiplierBoosters();
+    }
+
+    public Double getOriginalMultiplier(){
         return multiplier;
     }
 
@@ -63,8 +69,25 @@ public class Armazem {
         this.multiplier = multiplier;
     }
 
+    public Double getMultiplierBoosters(){
+        Double value = 0D;
+        for (BoosterPlayer boosterPlayer : getBoostersActive()) {
+            value +=boosterPlayer.getMultiplier();
+        }
+        return value;
+    }
+
     public List<BoosterPlayer> getBoostersActive() {
         return boostersActive;
+    }
+
+    public void addBooster(BoosterPlayer boosterPlayer){
+        getBoostersActive().add(boosterPlayer);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            final ArrayList<BoosterPlayer> list = new ArrayList<>(getBoostersActive());
+            list.remove(boosterPlayer);
+            setBoostersActive(list);
+        }, boosterPlayer.getTime());
     }
 
     public void setBoostersActive(List<BoosterPlayer> boostersActive) {

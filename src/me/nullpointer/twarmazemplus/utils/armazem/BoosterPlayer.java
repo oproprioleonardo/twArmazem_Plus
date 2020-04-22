@@ -10,6 +10,8 @@ public class BoosterPlayer {
         this.time = time;
     }
 
+
+
     public Double getMultiplier() {
         return multiplier;
     }

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerCACHE {
+public class PlayerC {
 
     public static List<Armazem> armazens = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class PlayerCACHE {
             if (dao.exists(p.getName().toLowerCase())){
                 dao.load(p.getName().toLowerCase());
                 final Armazem armazem = get(p.getName());
-                DropCACHE.drops.forEach(drop -> {
+                DropC.drops.forEach(drop -> {
                     if (armazem.getDropPlayers().stream().noneMatch(dropPlayer -> dropPlayer.getKeyDrop().equalsIgnoreCase(drop.getKeyDrop()))){
                         final List<DropPlayer> list = new ArrayList<>(armazem.getDropPlayers());
                         list.add(new DropPlayer(drop.getKeyDrop(), 0D));
@@ -39,7 +39,7 @@ public class PlayerCACHE {
             }else{
                 final Configuration configuration = API.getConfiguration();
                 final List<DropPlayer> drops = new ArrayList<>();
-                DropCACHE.drops.forEach(drop -> drops.add(new DropPlayer(drop.getKeyDrop(), 0D)));
+                DropC.drops.forEach(drop -> drops.add(new DropPlayer(drop.getKeyDrop(), 0D)));
                 final Armazem armazem = new Armazem(p.getName().toLowerCase(), Double.valueOf(configuration.getList("Limits.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), Double.valueOf(configuration.getList("Boosters.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), new ArrayList<>(), drops, new ArrayList<>());
                 put(armazem);
             }

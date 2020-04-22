@@ -22,6 +22,7 @@ public class Limit {
     }
 
     public boolean hasPermission(Player player){
+        if (!hasPermission()) return true;
         return player.hasPermission(permission);
     }
 

@@ -5,15 +5,21 @@ MySQL:
   Port: '3306'
   Database: "twmobcoins"
 Messages:
-  permission-error: "&cVocê não tem permissão para utilizar tal sistema/comando."
+  permission-error: "&cVocê não tem permissão para executar tal ação."
+  permission-error-limit: "&cVocê não tem permissão para usar esse ativador de limite de venda."
+  permission-error-booster: "&cVocê não tem permissão para utilizar esse booster."
   sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
-  limit-used: "&aVocê utilizou o limite ({limit-value}) e agora está com {player-limit-vale}."
+  limit-used: "&aVocê adicionou ({limit-value}) ao limite de venda e agora está com {player-limit-value}."
+  limit-max: "&cVocê ja atingiu o limite máximo de venda!"
+  drops-add: "&6&lDROPS &f-> &aForam adicionados {amount} drops de {drop-type} em seu armazém."
+  armazem-max: "&6&lDROPS &f-> &cSeu armazém está cheio, venda os itens acumulados!"
 Settings:
   #NÃO SUPORTA KILL-STEP
   stack-mobs: JH_StackMobs #O plugin suporta "JH_StackMobs" e "StackMobs" (spigot)
   break: true
   kill: true
   plot-drop: true
+  world-plot: "terrenos"
   friends:
     toggle: true
     max: 5

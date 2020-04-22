@@ -5,7 +5,7 @@ import me.nullpointer.twarmazemplus.utils.armazem.supliers.Booster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoosterCACHE {
+public class BoosterC {
 
     public static List<Booster> boosters = new ArrayList<>();
 

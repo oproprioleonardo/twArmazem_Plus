@@ -11,6 +11,7 @@ public class Settings {
     private boolean friends;
     private int friendsMax;
     private Double limitMax;
+    private String worldPlot;
 
     public Settings(Configuration configuration) {
         stackMob = StackMob.valueOf(configuration.get("Settings.stack-mobs", false));
@@ -20,6 +21,11 @@ public class Settings {
         friends = configuration.is("Settings.friends.toggle");
         friendsMax = configuration.getInt("Settings.friends.max");
         limitMax = configuration.getDouble("Limits.max");
+        worldPlot = configuration.get("world-plot", true);
+    }
+
+    public String getWorldPlot() {
+        return worldPlot;
     }
 
     public StackMob getStackMob() {

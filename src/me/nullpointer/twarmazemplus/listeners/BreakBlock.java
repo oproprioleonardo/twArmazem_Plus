@@ -1,8 +1,11 @@
 package me.nullpointer.twarmazemplus.listeners;
 
-import me.nullpointer.twarmazemplus.cache.DropCACHE;
-import me.nullpointer.twarmazemplus.cache.PlayerCACHE;
+import me.nullpointer.twarmazemplus.api.API;
+import me.nullpointer.twarmazemplus.cache.DropC;
+import me.nullpointer.twarmazemplus.cache.PlayerC;
 import me.nullpointer.twarmazemplus.enums.DropType;
+import me.nullpointer.twarmazemplus.enums.translate.ItemName;
+import me.nullpointer.twarmazemplus.utils.Configuration;
 import me.nullpointer.twarmazemplus.utils.Utils;
 import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
 import me.nullpointer.twarmazemplus.utils.armazem.BoosterPlayer;
@@ -21,17 +24,22 @@ public class BreakBlock implements Listener {
     public void breakBlock(BlockBreakEvent e) {
         final Player p = e.getPlayer();
         final Block block = e.getBlock();
-        final Armazem armazem = PlayerCACHE.get(p.getName());
+        final Armazem armazem = PlayerC.get(p.getName());
         for (DropPlayer dropPlayer : armazem.getDropPlayers()) {
-            final Drop drop = DropCACHE.get(dropPlayer.getKeyDrop());
+            final Drop drop = DropC.get(dropPlayer.getKeyDrop());
             if (drop.getType().equals(DropType.BREAK) && drop.getDrop().isSimilar(block.getState().getData().toItemStack())) {
-                if (!armazem.isMax()){
+                final Configuration configuration = API.getConfiguration();
+                if (!armazem.isMax()) {
                     Double multiplier = armazem.getMultiplier();
-                    for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) { multiplier += boosterPlayer.getMultiplier(); }
+                    for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
+                        multiplier += boosterPlayer.getMultiplier();
+                    }
                     final Double add = Math.floor(0D + block.getDrops().size() * Utils.getFortune(p) * multiplier);
-                    if (armazem.isMax(add)) dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
+                    if (armazem.isMax(add))
+                        dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                     else dropPlayer.addDropAmount(add);
-                }
+                    Utils.sendActionBar(p, configuration.getMessage("drops-add").replace("{amount}", Utils.format(add)).replace("{drop-type}", ItemName.valueOf(drop.getDrop()).getName()));
+                }else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
                 e.setCancelled(true);
                 p.giveExp(e.getExpToDrop());
                 block.setType(Material.AIR);

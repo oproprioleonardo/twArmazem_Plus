@@ -5,7 +5,7 @@ import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropCACHE {
+public class DropC {
 
     public static List<Drop> drops = new ArrayList<>();
 

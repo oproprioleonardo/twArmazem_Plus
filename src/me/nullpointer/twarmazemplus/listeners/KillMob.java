@@ -1,10 +1,12 @@
 package me.nullpointer.twarmazemplus.listeners;
 
 import me.nullpointer.twarmazemplus.api.API;
-import me.nullpointer.twarmazemplus.cache.DropCACHE;
-import me.nullpointer.twarmazemplus.cache.PlayerCACHE;
+import me.nullpointer.twarmazemplus.cache.DropC;
+import me.nullpointer.twarmazemplus.cache.PlayerC;
 import me.nullpointer.twarmazemplus.enums.DropType;
 import me.nullpointer.twarmazemplus.enums.StackMob;
+import me.nullpointer.twarmazemplus.enums.translate.ItemName;
+import me.nullpointer.twarmazemplus.utils.Configuration;
 import me.nullpointer.twarmazemplus.utils.Settings;
 import me.nullpointer.twarmazemplus.utils.Utils;
 import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
@@ -41,10 +43,11 @@ public class KillMob implements Listener {
         if (e.getEntity().getKiller() != null) {
             final Player p = e.getEntity().getKiller();
             final Entity mob = e.getEntity();
-            final Armazem armazem = PlayerCACHE.get(p.getName());
+            final Armazem armazem = PlayerC.get(p.getName());
             for (DropPlayer dropPlayer : armazem.getDropPlayers()) {
-                final Drop drop = DropCACHE.get(dropPlayer.getKeyDrop());
+                final Drop drop = DropC.get(dropPlayer.getKeyDrop());
                 if (drop.getType().equals(DropType.KILL) && drop.getEntityType().equals(mob.getType())) {
+                    final Configuration configuration = API.getConfiguration();
                     if (!armazem.isMax()) {
                         Double multiplier = armazem.getMultiplier();
                         for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
@@ -54,7 +57,8 @@ public class KillMob implements Listener {
                         if (armazem.isMax(add))
                             dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                         else dropPlayer.addDropAmount(add);
-                    }
+                        Utils.sendActionBar(p, configuration.getMessage("drops-add").replace("{amount}", Utils.format(add)).replace("{drop-type}", ItemName.valueOf(drop.getDrop()).getName()));
+                    }else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
                     e.getDrops().clear();
                     return;
                 }
