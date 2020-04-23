@@ -18,9 +18,12 @@ public class FormatTime {
         final long segundos = TimeUnit.MILLISECONDS.toSeconds(tempo) - (TimeUnit.MILLISECONDS.toMinutes(tempo) * 60);
         final StringBuilder sb = new StringBuilder();
         if (dias > 0) sb.append(dias).append(dias == 1 ? " dia" : " dias");
-        if (horas > 0) sb.append(dias > 0 ? (minutos > 0 ? ", " : " e ") : "").append(horas).append(horas == 1 ? " hora" : " horas");
-        if (minutos > 0) sb.append(dias > 0 || horas > 0 ? (segundos > 0 ? ", " : " e ") : "").append(minutos).append(minutos == 1 ? " minuto" : " minutos");
-        if (segundos > 0) sb.append(dias > 0 || horas > 0 || minutos > 0 ? " e " : (sb.length() > 0 ? ", " : "")).append(segundos).append(segundos == 1 ? " segundo" : " segundos");
+        if (horas > 0)
+            sb.append(dias > 0 ? (minutos > 0 ? ", " : " e ") : "").append(horas).append(horas == 1 ? " hora" : " horas");
+        if (minutos > 0)
+            sb.append(dias > 0 || horas > 0 ? (segundos > 0 ? ", " : " e ") : "").append(minutos).append(minutos == 1 ? " minuto" : " minutos");
+        if (segundos > 0)
+            sb.append(dias > 0 || horas > 0 || minutos > 0 ? " e " : (sb.length() > 0 ? ", " : "")).append(segundos).append(segundos == 1 ? " segundo" : " segundos");
         final String s = sb.toString();
         return s.isEmpty() ? "0 segundos" : s;
     }

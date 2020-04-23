@@ -11,7 +11,6 @@ public class BoosterPlayer {
     }
 
 
-
     public Double getMultiplier() {
         return multiplier;
     }

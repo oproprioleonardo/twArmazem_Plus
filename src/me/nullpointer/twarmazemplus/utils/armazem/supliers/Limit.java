@@ -21,12 +21,12 @@ public class Limit {
         return key;
     }
 
-    public boolean hasPermission(Player player){
+    public boolean hasPermission(Player player) {
         if (!hasPermission()) return true;
         return player.hasPermission(permission);
     }
 
-    public boolean hasPermission(){
+    public boolean hasPermission() {
         return permission.equalsIgnoreCase("");
     }
 

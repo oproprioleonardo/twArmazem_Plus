@@ -43,7 +43,7 @@ public class Booster {
         return permission.equalsIgnoreCase("");
     }
 
-    public boolean hasPermission(Player p){
+    public boolean hasPermission(Player p) {
         if (!hasPermission()) return true;
         return p.hasPermission(getPermission());
     }

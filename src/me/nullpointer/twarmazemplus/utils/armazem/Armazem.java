@@ -27,16 +27,16 @@ public class Armazem {
         this.friends = friends;
     }
 
-    public Double getAmountAll(){
+    public Double getAmountAll() {
         Double amountAll = 0D;
         for (DropPlayer dropPlayer : getDropPlayers()) {
-            amountAll+=dropPlayer.getDropAmount();
+            amountAll += dropPlayer.getDropAmount();
         }
         return amountAll;
     }
 
 
-    public Double getPriceAll(){
+    public Double getPriceAll() {
         double priceAll = 0D;
         for (DropPlayer dropPlayer : dropPlayers) {
             final Drop drop = DropC.get(dropPlayer.getKeyDrop());
@@ -45,11 +45,11 @@ public class Armazem {
         return priceAll;
     }
 
-    public boolean isMax(){
+    public boolean isMax() {
         return getAmountAll() >= getLimit();
     }
 
-    public boolean isMax(Double amount){
+    public boolean isMax(Double amount) {
         return getAmountAll() + amount > getLimit();
     }
 
@@ -57,11 +57,11 @@ public class Armazem {
         return owner;
     }
 
-    public Player getOwnerPlayer(){
+    public Player getOwnerPlayer() {
         return Bukkit.getPlayer(owner);
     }
 
-    public String getCorrectNameOwner(){
+    public String getCorrectNameOwner() {
         return Bukkit.getOfflinePlayer(owner).getName();
     }
 
@@ -69,26 +69,30 @@ public class Armazem {
         return limit;
     }
 
-    public Double getMultiplier() {
-        return multiplier + getMultiplierBoosters();
+    public void setLimit(Double limit) {
+        this.limit = limit;
     }
 
-    public Double getOriginalMultiplier(){
-        return multiplier;
+    public Double getMultiplier() {
+        return multiplier + getMultiplierBoosters();
     }
 
     public void setMultiplier(Double multiplier) {
         this.multiplier = multiplier;
     }
 
+    public Double getOriginalMultiplier() {
+        return multiplier;
+    }
+
     public void addMultiplier(Double multiplier) {
         this.multiplier += multiplier;
     }
 
-    public Double getMultiplierBoosters(){
+    public Double getMultiplierBoosters() {
         Double value = 0D;
         for (BoosterPlayer boosterPlayer : getBoostersActive()) {
-            value +=boosterPlayer.getMultiplier();
+            value += boosterPlayer.getMultiplier();
         }
         return value;
     }
@@ -97,17 +101,17 @@ public class Armazem {
         return boostersActive;
     }
 
-    public void addBooster(BoosterPlayer boosterPlayer){
+    public void setBoostersActive(List<BoosterPlayer> boostersActive) {
+        this.boostersActive = boostersActive;
+    }
+
+    public void addBooster(BoosterPlayer boosterPlayer) {
         getBoostersActive().add(boosterPlayer);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             final ArrayList<BoosterPlayer> list = new ArrayList<>(getBoostersActive());
             list.remove(boosterPlayer);
             setBoostersActive(list);
         }, boosterPlayer.getTime());
-    }
-
-    public void setBoostersActive(List<BoosterPlayer> boostersActive) {
-        this.boostersActive = boostersActive;
     }
 
     public List<DropPlayer> getDropPlayers() {
@@ -126,15 +130,11 @@ public class Armazem {
         this.friends = friends;
     }
 
-    public void setLimit(Double limit) {
-        this.limit = limit;
-    }
-
-    public void removeLimit(Double limit){
+    public void removeLimit(Double limit) {
         this.limit -= limit;
     }
 
-    public void addLimit(Double limit){
+    public void addLimit(Double limit) {
         this.limit += limit;
     }
 }

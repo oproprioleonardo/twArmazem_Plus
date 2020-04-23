@@ -56,7 +56,7 @@ public class CmdBooster extends BukkitCommand {
                             final Player player = Bukkit.getPlayer(args[1]);
                             Utils.giveItem(player, itemStack);
                             return true;
-                        }else s.sendMessage(configuration.getMessage("number-invalid"));
+                        } else s.sendMessage(configuration.getMessage("number-invalid"));
                         return true;
                     }
                 }

@@ -39,7 +39,7 @@ public class BreakBlock implements Listener {
                         dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                     else dropPlayer.addDropAmount(add);
                     Utils.sendActionBar(p, configuration.getMessage("drops-add").replace("{amount}", Utils.format(add)).replace("{drop-type}", ItemName.valueOf(drop.getDrop()).getName()));
-                }else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
+                } else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
                 e.setCancelled(true);
                 p.giveExp(e.getExpToDrop());
                 block.setType(Material.AIR);

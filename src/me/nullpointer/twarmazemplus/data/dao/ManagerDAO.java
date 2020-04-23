@@ -22,7 +22,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
         try {
             final Connection connection = ConnectionFactory.make();
             assert connection != null : "Conexão não foi estabelecida corretamente.";
-            final PreparedStatement st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Armazem(Owner VARCHAR(16) Primary Key, Limit DOUBLE, Multiplier DOUBLE, Friends VARCHAR(8000), Drops VARCHAR(8000));");
+            final PreparedStatement st = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Armazem(Owner VARCHAR(16) Primary Key, Limite DOUBLE, Multiplier DOUBLE, Friends VARCHAR(8000), Drops VARCHAR(8000))");
             st.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -41,7 +41,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
             result.next();
             final List<DropPlayer> dropPlayer = new ArrayList<>();
             Arrays.asList(result.getString("Drops").split(",")).forEach(s -> dropPlayer.add(new DropPlayer(s.split(":")[0], Double.parseDouble(s.split(":")[1]))));
-            final Armazem armazem = new Armazem(owner, result.getDouble("Limit"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
+            final Armazem armazem = new Armazem(owner, result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, result.getString("Friends").equalsIgnoreCase("") ? new ArrayList<>() : Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
             PlayerC.put(armazem);
             connection.close();
         } catch (SQLException e) {
@@ -54,7 +54,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
         try {
             final Connection connection = ConnectionFactory.make();
             assert connection != null : "Conexão não foi estabelecida corretamente.";
-            final PreparedStatement st = connection.prepareStatement("INSERT INTO Armazem(Owner, Limit, Multiplier, Friends, Drops) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE Armazem SET Owner = ? ,Limit = ? ,Multiplier = ?, Friends = ?, Drops = ?");
+            final PreparedStatement st = connection.prepareStatement("INSERT INTO Armazem VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE Owner = ? ,Limite = ? ,Multiplier = ?, Friends = ?, Drops = ?");
             final StringBuilder stringBuilder = new StringBuilder();
             armazem.getDropPlayers().forEach(dropPlayer -> stringBuilder.append(stringBuilder.toString().equals("") ? "" : ",").append(dropPlayer.getKeyDrop()).append(":").append(dropPlayer.getDropAmount()));
             st.setString(1, armazem.getOwner());
@@ -80,7 +80,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
             final Connection connection = ConnectionFactory.make();
             assert connection != null : "Conexão não foi estabelecida corretamente.";
             for (Armazem armazem : PlayerC.armazens) {
-                final PreparedStatement st = connection.prepareStatement("INSERT INTO Armazem(Owner, Limit, Multiplier, Friends, Drops) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE Armazem SET Owner = ? ,Limit = ? ,Multiplier = ?, Friends = ?, Drops = ?");
+                final PreparedStatement st = connection.prepareStatement("INSERT INTO Armazem VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE Owner = ? ,Limite = ? ,Multiplier = ?, Friends = ?, Drops = ?");
                 final StringBuilder stringBuilder = new StringBuilder();
                 armazem.getDropPlayers().forEach(dropPlayer -> stringBuilder.append(stringBuilder.toString().equals("") ? "" : ",").append(dropPlayer.getKeyDrop()).append(":").append(dropPlayer.getDropAmount()));
                 st.setString(1, armazem.getOwner());
@@ -112,11 +112,11 @@ public class ManagerDAO implements DAO<String, Armazem> {
                 if (Bukkit.getPlayer(result.getString("Owner")) != null) {
                     final List<DropPlayer> dropPlayer = new ArrayList<>();
                     Arrays.asList(result.getString("Drops").split(",")).forEach(s -> {
-                        if (DropC.drops.stream().anyMatch(drop -> drop.getKeyDrop().equalsIgnoreCase(s.split(":")[0]))){
+                        if (DropC.drops.stream().anyMatch(drop -> drop.getKeyDrop().equalsIgnoreCase(s.split(":")[0]))) {
                             dropPlayer.add(new DropPlayer(s.split(":")[0], Double.parseDouble(s.split(":")[1])));
                         }
                     });
-                    final Armazem armazem = new Armazem(result.getString("Owner"), result.getDouble("Limit"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
+                    final Armazem armazem = new Armazem(result.getString("Owner"), result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
                     PlayerC.put(armazem);
                 }
             }
@@ -131,7 +131,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
         try {
             final Connection connection = ConnectionFactory.make();
             assert connection != null : "Conexão não foi estabelecida corretamente.";
-            final PreparedStatement st = connection.prepareStatement("delete Armazem where Owner = ?");
+            final PreparedStatement st = connection.prepareStatement("delete from Armazem where Owner = ?");
             st.setString(1, owner);
             st.executeUpdate();
             connection.close();
@@ -147,9 +147,9 @@ public class ManagerDAO implements DAO<String, Armazem> {
             assert connection != null : "Conexão não foi estabelecida corretamente.";
             final PreparedStatement st = connection.prepareStatement("SELECT * FROM Armazem where Owner = ?");
             st.setString(1, owner);
-            final ResultSet result = st.executeQuery();
+            final boolean result = st.executeQuery().next();
             connection.close();
-            return result.next();
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

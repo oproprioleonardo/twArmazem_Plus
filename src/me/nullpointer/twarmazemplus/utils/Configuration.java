@@ -66,7 +66,8 @@ public class Configuration {
     }
 
     public Integer getInt(String path) {
-        if (has(path)) return config.getInt(path); else return 0;
+        if (has(path)) return config.getInt(path);
+        else return 0;
     }
 
     public Double getDouble(String path) {

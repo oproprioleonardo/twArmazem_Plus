@@ -14,29 +14,29 @@ public class PlayerC {
 
     public static List<Armazem> armazens = new ArrayList<>();
 
-    public static void put(Armazem armazem){
+    public static void put(Armazem armazem) {
         armazens.add(armazem);
     }
 
-    public static void remove(Armazem armazem){
+    public static void remove(Armazem armazem) {
         new ManagerDAO().save(armazem);
         armazens.remove(armazem);
     }
 
-    public static void load(Player p){
-        if (!exists(p.getName())){
+    public static void load(Player p) {
+        if (!exists(p.getName())) {
             final ManagerDAO dao = new ManagerDAO();
-            if (dao.exists(p.getName().toLowerCase())){
+            if (dao.exists(p.getName().toLowerCase())) {
                 dao.load(p.getName().toLowerCase());
                 final Armazem armazem = get(p.getName());
                 DropC.drops.forEach(drop -> {
-                    if (armazem.getDropPlayers().stream().noneMatch(dropPlayer -> dropPlayer.getKeyDrop().equalsIgnoreCase(drop.getKeyDrop()))){
+                    if (armazem.getDropPlayers().stream().noneMatch(dropPlayer -> dropPlayer.getKeyDrop().equalsIgnoreCase(drop.getKeyDrop()))) {
                         final List<DropPlayer> list = new ArrayList<>(armazem.getDropPlayers());
                         list.add(new DropPlayer(drop.getKeyDrop(), 0D));
                         armazem.setDropPlayers(list);
                     }
                 });
-            }else{
+            } else {
                 final Configuration configuration = API.getConfiguration();
                 final List<DropPlayer> drops = new ArrayList<>();
                 DropC.drops.forEach(drop -> drops.add(new DropPlayer(drop.getKeyDrop(), 0D)));
@@ -46,17 +46,17 @@ public class PlayerC {
         }
     }
 
-    public static void remove(String owner){
+    public static void remove(String owner) {
         final Armazem armazem = get(owner);
         new ManagerDAO().save(armazem);
         remove(armazem);
     }
 
-    public static boolean exists(String owner){
+    public static boolean exists(String owner) {
         return armazens.stream().anyMatch(armazem -> armazem.getOwner().equalsIgnoreCase(owner.toLowerCase()));
     }
 
-    public static Armazem get(String owner){
+    public static Armazem get(String owner) {
         return armazens.stream().filter(armazem -> armazem.getOwner().equalsIgnoreCase(owner.toLowerCase())).findFirst().orElseGet(() -> armazens.get(0));
     }
 

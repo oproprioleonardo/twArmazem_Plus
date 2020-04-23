@@ -4,8 +4,6 @@ import me.nullpointer.twarmazemplus.Main;
 import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class DropPlayer {
@@ -37,11 +35,11 @@ public class DropPlayer {
         setDropAmount(0D);
     }
 
-    public void addDropAmount(Double amount){
+    public void addDropAmount(Double amount) {
         this.amount += amount;
     }
 
-    public void removeDropAmount(Double amount){
+    public void removeDropAmount(Double amount) {
         this.amount -= amount;
     }
 }

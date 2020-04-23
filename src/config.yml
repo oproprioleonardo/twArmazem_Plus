@@ -54,8 +54,8 @@ Limits:
       data: 0
       name: "&eLimite de venda"
       lore:
-      - "&eUtilize-me para aumentar seu"
-      - "&elimite de venda."
+        - "&eUtilize-me para aumentar seu"
+        - "&elimite de venda."
       value: 10000 #aumenta em 10 mil
       permission: "member.permission" # pode ou não usar
 Boosters:
@@ -84,9 +84,9 @@ Drops:
       data: 0
       name: "&bDiamante"
       lore:
-      - "&ePreço unitário: {price-sell-unit}"
-      - "&eQuantidade: {amount}"
-      - "&ePreço de venda: {price-sell-all}"
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
       amount: 1
   dropTwo:
     id: 277
@@ -121,7 +121,7 @@ Inventory:
   sell:
     name: "&aMenu de vendas."
     rows: 6
-    slotsDropSell: ""
+    slotsDropSell: "10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,32,34"
     items:
       playerStats:
         slot: 4 #válido a primeira e a última row

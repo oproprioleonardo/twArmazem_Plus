@@ -26,9 +26,9 @@ public class ChunkLoad implements Listener {
     @EventHandler
     public void load(ChunkLoadEvent e) {
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
-            try{
+            try {
                 if (e.getWorld().getName().equalsIgnoreCase(API.getSettings().getWorldPlot())) {
-                    for (Entity entity : e.getChunk().getEntities()){
+                    for (Entity entity : e.getChunk().getEntities()) {
                         if (!entity.getType().equals(EntityType.DROPPED_ITEM)) continue;
                         final Item item = (Item) entity;
                         final Plot plot = new PlotAPI().getPlot(item.getLocation());
@@ -57,7 +57,7 @@ public class ChunkLoad implements Listener {
                         }
                     }
                 }
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
             }
         });
 

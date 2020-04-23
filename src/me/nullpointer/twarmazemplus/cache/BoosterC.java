@@ -9,23 +9,23 @@ public class BoosterC {
 
     public static List<Booster> boosters = new ArrayList<>();
 
-    public static void put(Booster booster){
+    public static void put(Booster booster) {
         boosters.add(booster);
     }
 
-    public static void remove(Booster b){
+    public static void remove(Booster b) {
         boosters.remove(b);
     }
 
-    public static void remove(String key){
+    public static void remove(String key) {
         remove(get(key));
     }
 
-    public static boolean has(String key){
+    public static boolean has(String key) {
         return boosters.stream().anyMatch(booster -> booster.getKey().equalsIgnoreCase(key));
     }
 
-    public static Booster get(String key){
+    public static Booster get(String key) {
         return boosters.stream().filter(booster -> booster.getKey().equalsIgnoreCase(key)).findFirst().orElseGet(() -> boosters.get(0));
     }
 }

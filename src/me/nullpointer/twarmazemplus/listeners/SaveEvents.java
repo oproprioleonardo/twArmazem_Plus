@@ -14,7 +14,7 @@ public class SaveEvents implements Listener {
     }
 
     @EventHandler
-    public void quit(PlayerQuitEvent e){
+    public void quit(PlayerQuitEvent e) {
         PlayerC.remove(e.getPlayer().getName());
     }
 }
