@@ -87,9 +87,11 @@ public class CmdFriends extends BukkitCommand {
                 }
                 final Armazem armazem = PlayerC.get(p.getName());
                 if (args[0].equalsIgnoreCase("add")){
+                    if (armazem.getFriends().contains(args[1].toLowerCase())) return true;
                     armazem.getFriends().add(args[1].toLowerCase());
                     p.sendMessage(configuration.getMessage("friends-add").replace("{player}", p.getName()));
                 }else if (args[0].equalsIgnoreCase("remove")){
+                    if (!armazem.getFriends().contains(args[1].toLowerCase())) return true;
                     final ArrayList<String> friends = new ArrayList<>(armazem.getFriends());
                     friends.remove(args[1].toLowerCase());
                     armazem.setFriends(friends);
