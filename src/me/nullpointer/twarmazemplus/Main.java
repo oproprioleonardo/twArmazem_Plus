@@ -5,6 +5,7 @@ import me.nullpointer.twarmazemplus.cache.BoosterC;
 import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.cache.LimitsC;
 import me.nullpointer.twarmazemplus.commands.CmdBooster;
+import me.nullpointer.twarmazemplus.commands.CmdFriends;
 import me.nullpointer.twarmazemplus.commands.CmdLimit;
 import me.nullpointer.twarmazemplus.commands.CmdSell;
 import me.nullpointer.twarmazemplus.data.dao.ManagerDAO;
@@ -59,6 +60,7 @@ public class Main extends JavaPlugin {
         ((CraftServer) this.getServer()).getCommandMap().register("limitedevenda", new CmdLimit());
         ((CraftServer) this.getServer()).getCommandMap().register("booster", new CmdBooster());
         ((CraftServer) this.getServer()).getCommandMap().register("vender", new CmdSell());
+        ((CraftServer) this.getServer()).getCommandMap().register("armazemfriends", new CmdFriends());
     }
 
     @Override

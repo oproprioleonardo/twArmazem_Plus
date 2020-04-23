@@ -32,44 +32,71 @@ public class CmdSell extends BukkitCommand {
     @Override
     public boolean execute(CommandSender s, String lbl, String[] args) {
         if (s instanceof Player) {
-            final Configuration configuration = API.getConfiguration();
             final Player p = (Player) s;
-            final Armazem armazem = PlayerC.get(p.getName());
-            final InventoryBuilder inventoryBuilder = new InventoryBuilder(Main.getInstance(), configuration.getInt("Inventory.sell.rows"), configuration.get("Inventory.sell.name", true));
-            final List<Integer> slots = new ArrayList<>();
-            Arrays.asList(configuration.get("Inventory.sell.slotsDropSell", true).split(",")).forEach(s1 -> slots.add(Integer.parseInt(s1)));
-            inventoryBuilder.setCancellable(true);
-            inventoryBuilder.clear();
-            String path = "Inventory.sell.items.playerStats.";
-            inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{limit}", Utils.format(armazem.getLimit())).replace("{multiplier}", armazem.getMultiplier().toString())).collect(Collectors.toList())));
-            path = "Inventory.sell.items.sellAll.";
-            inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{drops}", Utils.format(armazem.getAmountAll())).replace("{total}", Utils.format(armazem.getPriceAll()))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+            if (args.length == 0) {
+                final Configuration configuration = API.getConfiguration();
+                final Armazem armazem = PlayerC.get(p.getName());
+                openSellInventory(p, armazem, configuration);
+            }else if(args.length == 1){
+                if (PlayerC.exists(args[0])){
+                    final Configuration configuration = API.getConfiguration();
+                    final Armazem armazem = PlayerC.get(args[0]);
+                    if (armazem.getFriends().stream().anyMatch(s1 -> s1.equalsIgnoreCase(p.getName()))) {
+                        openSellInventory(p, armazem, configuration);
+                        return true;
+                    }
+                }
+                p.sendMessage("drops-no-friend");
+            }
+        }
+        return true;
+    }
+
+    public void openSellInventory(Player p, Armazem armazem, Configuration configuration){
+        final InventoryBuilder inventoryBuilder = new InventoryBuilder(Main.getInstance(), configuration.getInt("Inventory.sell.rows"), configuration.get("Inventory.sell.name", true));
+        final List<Integer> slots = new ArrayList<>();
+        Arrays.asList(configuration.get("Inventory.sell.slotsDropSell", true).split(",")).forEach(s1 -> slots.add(Integer.parseInt(s1)));
+        inventoryBuilder.setCancellable(true);
+        inventoryBuilder.clear();
+        String path = "Inventory.sell.items.playerStats.";
+        inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{limit}", Utils.format(armazem.getLimit())).replace("{multiplier}", armazem.getMultiplier().toString())).collect(Collectors.toList())));
+        path = "Inventory.sell.items.sellAll.";
+        inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{drops}", Utils.format(armazem.getAmountAll())).replace("{total}", Utils.format(armazem.getPriceAll()))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+            if (!p.hasPermission("armazem.sellall")){
+                return;
+            }
+            if (armazem.getAmountAll() > 0) {
                 Utils.sendActionBar(p, configuration.getMessage("drops-sell").replace("{amount}", Utils.format(armazem.getAmountAll())).replace("{price}", Utils.format(armazem.getPriceAll())));
                 armazem.getDropPlayers().forEach(dropPlayer -> {
                     dropPlayer.sell(p);
                 });
-                Bukkit.dispatchCommand(p, "vender");
-            }));
-            path = "Inventory.sell.items.autoSell.";
-            inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true)).onClick(inventoryClickEvent -> {
-
-            }));
-            final List<DropPlayer> dropsPlayer = armazem.getDropPlayers().stream().filter(dropPlayer -> dropPlayer.getDropAmount() > 0).collect(Collectors.toList());
-            if (dropsPlayer.size() != 0) {
-                for (int count = 0; count < slots.size(); count++) {
-                    if (dropsPlayer.size() == count) break;
-                    final DropPlayer dropPlayer = dropsPlayer.get(count);
-                    final Drop drop = DropC.get(dropPlayer.getKeyDrop());
-                    final List<String> lore = drop.getMenuItem().getItemMeta().getLore();
-                    inventoryBuilder.setItem(slots.get(count), new Item(drop.getMenuItem().build().clone()).lore(lore.stream().map(s1 -> s1.replace("{price-sell-unit}", Utils.format(drop.getUnitPrice())).replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{price-sell-all}", Utils.format(drop.getUnitPrice() * dropPlayer.getDropAmount()))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+            }
+            Bukkit.dispatchCommand(p, "vender "+ armazem.getOwner());
+        }));
+        path = "Inventory.sell.items.autoSell.";
+        inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{state}", armazem.isAutoSellResult()).replace("{future-state}", "" + !armazem.isAutoSell())).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+            if (!p.hasPermission("armazem.autosell")){
+                return;
+            }
+            armazem.setAutoSell(!armazem.isAutoSell());
+            Bukkit.dispatchCommand(p, "vender " + armazem.getOwner());
+        }));
+        final List<DropPlayer> dropsPlayer = armazem.getDropPlayers().stream().filter(dropPlayer -> dropPlayer.getDropAmount() > 0).collect(Collectors.toList());
+        if (dropsPlayer.size() != 0) {
+            for (int count = 0; count < slots.size(); count++) {
+                if (dropsPlayer.size() == count) break;
+                final DropPlayer dropPlayer = dropsPlayer.get(count);
+                final Drop drop = DropC.get(dropPlayer.getKeyDrop());
+                final List<String> lore = drop.getMenuItem().getItemMeta().getLore();
+                inventoryBuilder.setItem(slots.get(count), new Item(drop.getMenuItem().build().clone()).lore(lore.stream().map(s1 -> s1.replace("{price-sell-unit}", Utils.format(drop.getUnitPrice())).replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{price-sell-all}", Utils.format(drop.getUnitPrice() * dropPlayer.getDropAmount()))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+                    if (dropPlayer.getDropAmount() > 0) {
                         Utils.sendActionBar(p, configuration.getMessage("drops-sell").replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{item}", ItemName.valueOf(drop.getDrop()).getName()).replace("{price}", Utils.format(dropPlayer.getDropAmount() * drop.getUnitPrice())));
                         dropPlayer.sell(p);
-                        Bukkit.dispatchCommand(p, "vender");
-                    }));
-                }
+                    }
+                    Bukkit.dispatchCommand(p, "vender "+ armazem.getOwner());
+                }));
             }
-            inventoryBuilder.open(p);
         }
-        return true;
+        inventoryBuilder.open(p);
     }
 }

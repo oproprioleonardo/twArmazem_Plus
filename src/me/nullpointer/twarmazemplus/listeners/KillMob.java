@@ -59,6 +59,9 @@ public class KillMob implements Listener {
                         else dropPlayer.addDropAmount(add);
                         Utils.sendActionBar(p, configuration.getMessage("drops-add").replace("{amount}", Utils.format(add)).replace("{drop-type}", ItemName.valueOf(drop.getDrop()).getName()));
                     } else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
+                    if (armazem.isAutoSell()){
+                        if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer());
+                    }
                     e.getDrops().clear();
                     return;
                 }

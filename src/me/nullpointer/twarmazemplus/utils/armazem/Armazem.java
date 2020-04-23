@@ -14,6 +14,7 @@ public class Armazem {
     private String owner;
     private Double limit;
     private Double multiplier;
+    private boolean autoSell = false;
     private List<BoosterPlayer> boostersActive;
     private List<DropPlayer> dropPlayers;
     private List<String> friends;
@@ -25,6 +26,18 @@ public class Armazem {
         this.boostersActive = boostersActive;
         this.dropPlayers = dropPlayers;
         this.friends = friends;
+    }
+
+    public boolean isAutoSell() {
+        return autoSell;
+    }
+
+    public String isAutoSellResult(){
+        return isAutoSell() ? "ativado" : "desativado";
+    }
+
+    public void setAutoSell(boolean autoSell) {
+        this.autoSell = autoSell;
     }
 
     public Double getAmountAll() {
