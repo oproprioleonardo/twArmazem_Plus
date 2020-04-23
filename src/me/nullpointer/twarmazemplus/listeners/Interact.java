@@ -19,11 +19,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.concurrent.TimeUnit;
+
 public class Interact implements Listener {
 
     @EventHandler
     public void interact(PlayerInteractEvent e) {
         final Player p = e.getPlayer();
+        if (e.getItem() == null) return;
         final ItemStack item = e.getItem();
         for (Limit limit : LimitsC.limits) {
             if (!item.isSimilar(limit.getItemStack())) continue;
@@ -46,6 +49,7 @@ public class Interact implements Listener {
             if (item.getAmount() > 1) item.setAmount(item.getAmount() - 1);
             else p.setItemInHand(new ItemStack(Material.AIR));
             p.sendMessage(configuration.getMessage("limit-used").replace("{limit-value}", Utils.format(adder)).replace("{player-limit-value}", Utils.format(armazem.getLimit())));
+            e.setCancelled(true);
             return;
         }
         for (Booster booster : BoosterC.boosters) {
@@ -61,10 +65,11 @@ public class Interact implements Listener {
                 p.sendMessage(configuration.getMessage("booster-used").replace("{time}", "infinito").replace("{multiplier}", booster.getMultiplier().toString()));
             } else {
                 armazem.addBooster(new BoosterPlayer(booster.getMultiplier(), booster.getTime()));
-                p.sendMessage(configuration.getMessage("booster-used").replace("{time}", new FormatTime(booster.getTime()).format()).replace("{multiplier}", booster.getMultiplier().toString()));
+                p.sendMessage(configuration.getMessage("booster-used").replace("{time}", new FormatTime(TimeUnit.SECONDS.toMillis(booster.getTime())).format()).replace("{multiplier}", booster.getMultiplier().toString()));
             }
             if (item.getAmount() > 1) item.setAmount(item.getAmount() - 1);
             else p.setItemInHand(new ItemStack(Material.AIR));
+            e.setCancelled(true);
             return;
         }
     }

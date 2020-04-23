@@ -71,10 +71,12 @@ public class Configuration {
     }
 
     public Double getDouble(String path) {
+        if (!has(path)) return 0D;
         return config.getDouble(path);
     }
 
     public Long getLong(String path) {
+        if (!has(path)) return 0L;
         return config.getLong(path);
     }
 

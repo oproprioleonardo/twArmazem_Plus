@@ -33,20 +33,19 @@ public class CmdSell extends BukkitCommand {
     public boolean execute(CommandSender s, String lbl, String[] args) {
         if (s instanceof Player) {
             final Player p = (Player) s;
+            final Configuration configuration = API.getConfiguration();
             if (args.length == 0) {
-                final Configuration configuration = API.getConfiguration();
                 final Armazem armazem = PlayerC.get(p.getName());
                 openSellInventory(p, armazem, configuration);
             }else if(args.length == 1){
                 if (PlayerC.exists(args[0])){
-                    final Configuration configuration = API.getConfiguration();
                     final Armazem armazem = PlayerC.get(args[0]);
-                    if (armazem.getFriends().stream().anyMatch(s1 -> s1.equalsIgnoreCase(p.getName()))) {
+                    if (armazem.getFriends().stream().anyMatch(s1 -> s1.equalsIgnoreCase(p.getName())) || args[0].equalsIgnoreCase(p.getName())) {
                         openSellInventory(p, armazem, configuration);
                         return true;
                     }
                 }
-                p.sendMessage("drops-no-friend");
+                p.sendMessage(configuration.getMessage("drops-no-friend"));
             }
         }
         return true;
@@ -66,7 +65,7 @@ public class CmdSell extends BukkitCommand {
                 return;
             }
             if (armazem.getAmountAll() > 0) {
-                Utils.sendActionBar(p, configuration.getMessage("drops-sell").replace("{amount}", Utils.format(armazem.getAmountAll())).replace("{price}", Utils.format(armazem.getPriceAll())));
+                Utils.sendActionBar(p, configuration.getMessage("drops-sellall").replace("{amount}", Utils.format(armazem.getAmountAll())).replace("{price}", Utils.format(armazem.getPriceAll())));
                 armazem.getDropPlayers().forEach(dropPlayer -> {
                     dropPlayer.sell(p);
                 });
@@ -74,7 +73,7 @@ public class CmdSell extends BukkitCommand {
             Bukkit.dispatchCommand(p, "vender "+ armazem.getOwner());
         }));
         path = "Inventory.sell.items.autoSell.";
-        inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{state}", armazem.isAutoSellResult()).replace("{future-state}", "" + !armazem.isAutoSell())).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
+        inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{state}", armazem.isAutoSellResult()).replace("{future-state}", "" + (!armazem.isAutoSell() ? "ativar" : "desativar"))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
             if (!p.hasPermission("armazem.autosell")){
                 return;
             }

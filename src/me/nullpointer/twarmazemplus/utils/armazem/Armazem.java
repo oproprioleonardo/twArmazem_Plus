@@ -124,7 +124,7 @@ public class Armazem {
             final ArrayList<BoosterPlayer> list = new ArrayList<>(getBoostersActive());
             list.remove(boosterPlayer);
             setBoostersActive(list);
-        }, boosterPlayer.getTime());
+        }, 20 * boosterPlayer.getTime());
     }
 
     public List<DropPlayer> getDropPlayers() {

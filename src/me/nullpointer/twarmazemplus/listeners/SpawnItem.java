@@ -37,11 +37,7 @@ public class SpawnItem implements Listener {
                             final Drop drop = DropC.get(dropPlayer.getKeyDrop());
                             if (drop.getType().equals(DropType.PLOT_DROP) && drop.getDrop().isSimilar(itemStack)) {
                                 if (!armazem.isMax()) {
-                                    Double multiplier = armazem.getMultiplier();
-                                    for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
-                                        multiplier += boosterPlayer.getMultiplier();
-                                    }
-                                    final Double add = Math.floor(0D + itemStack.getAmount() * multiplier);
+                                    final Double add = Math.floor(0D + itemStack.getAmount());
                                     if (armazem.isMax(add))
                                         dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                                     else dropPlayer.addDropAmount(add);

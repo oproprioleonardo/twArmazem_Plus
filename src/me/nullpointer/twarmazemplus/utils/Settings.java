@@ -21,7 +21,7 @@ public class Settings {
         friends = configuration.is("Settings.friends.toggle");
         friendsMax = configuration.getInt("Settings.friends.max");
         limitMax = configuration.getDouble("Limits.max");
-        worldPlot = configuration.get("world-plot", true);
+        worldPlot = configuration.get("Settings.world-plot", true);
     }
 
     public String getWorldPlot() {

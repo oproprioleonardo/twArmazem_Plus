@@ -49,11 +49,7 @@ public class KillMob implements Listener {
                 if (drop.getType().equals(DropType.KILL) && drop.getEntityType().equals(mob.getType())) {
                     final Configuration configuration = API.getConfiguration();
                     if (!armazem.isMax()) {
-                        Double multiplier = armazem.getMultiplier();
-                        for (BoosterPlayer boosterPlayer : armazem.getBoostersActive()) {
-                            multiplier += boosterPlayer.getMultiplier();
-                        }
-                        final Double add = Math.floor(Utils.multiplyDrops(p, getMobAmount(mob)) * multiplier);
+                        final Double add = Math.floor(Utils.multiplyDrops(p, getMobAmount(mob)) * armazem.getMultiplier());
                         if (armazem.isMax(add))
                             dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                         else dropPlayer.addDropAmount(add);

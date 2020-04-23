@@ -79,12 +79,12 @@ Boosters:
         - "&aBooster 1.5x"
 Drops:
   dropOne:
-    id: 56
+    id: 57
     data: 0
     unit-sales-value: "100M"
     type: BREAK #suporta BREAK, PLOT_DROP, KILL
     drop-item-menu:
-      id: 56
+      id: 57
       data: 0
       name: "&bDiamante"
       lore:
