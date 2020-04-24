@@ -57,7 +57,7 @@ public class Main extends JavaPlugin {
             final Limit limit = new Limit(s, new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true)).lore(configuration.getList(path + "lore", true)).build(), configuration.getDouble(path + "value"), configuration.get(path + "permission", false));
             LimitsC.put(limit);
         });
-        configuration.section("Bonus").forEach(s -> BonusC.put(s.replace("-", "."), configuration.getInt("Bonus.s")));
+        configuration.section("Bonus").forEach(s -> BonusC.put(s.replace("-", "."), configuration.getInt("Bonus."+s)));
         final ManagerDAO dao = new ManagerDAO();
         dao.createTable();
         dao.loadAll();

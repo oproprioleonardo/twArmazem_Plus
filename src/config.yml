@@ -51,6 +51,7 @@ Settings:
 Bonus:
   permission-dois-use: 20 # permissão (cada "-" conta como se fosse um ".") e porcentagem
   permission-use-vip: 10 # permissão (cada "-" conta como se fosse um ".") e porcentagem
+  permission-membro: 0
 Limits:
   default:
     - "member.vip.prime:100000"
@@ -140,6 +141,7 @@ Inventory:
         lore:
           - "&fLimite de Venda: &7{limit}"
           - "&fBooster de Drops: &7{multiplier}"
+          - "&fBônus de venda: &7{bonus}%"
       sellAll:
         slot: 51 #válido a primeira e a última row
         id: 339
