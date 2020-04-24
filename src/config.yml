@@ -27,6 +27,7 @@ Messages:
   friends-0: "&cVocê não possui nenhum amigo adicionado ao seu armazém."
   friends-remove: "&cVocê retirou o acesso de {player} do seu armazém."
   friends-add: "&aVocê deu acesso do seu armazém para o jogador {player}."
+  friends-max: "&cVocê atingiu ao limite máximo de amigos."
 Settings:
   #NÃO SUPORTA KILL-STEP
   stack-mobs: JH_StackMobs #O plugin suporta "JH_StackMobs" e "StackMobs" (spigot)
@@ -47,6 +48,9 @@ Settings:
     - "QI,1000000000000000.0"
     - "SEX,1000000000000000000.0"
     - "SEP,1000000000000000000000.0"
+Bonus:
+  permission-dois-use: 20 # permissão (cada "-" conta como se fosse um ".") e porcentagem
+  permission-use-vip: 10 # permissão (cada "-" conta como se fosse um ".") e porcentagem
 Limits:
   default:
     - "member.vip.prime:100000"

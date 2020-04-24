@@ -28,10 +28,11 @@ public class DropPlayer {
         this.amount = amount;
     }
 
-    public void sell(Player p) {
+    public void sell(Player p, Armazem armazem) {
         final Drop drop = DropC.get(getKeyDrop());
         final Economy economy = Main.economy;
-        economy.depositPlayer(p, drop.getUnitPrice() * getDropAmount());
+        final double value = drop.getUnitPrice() * getDropAmount();
+        economy.depositPlayer(p, value + (value * armazem.getBonus() / 100));
         setDropAmount(0D);
     }
 

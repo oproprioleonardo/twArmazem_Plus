@@ -1,7 +1,5 @@
 package me.nullpointer.twarmazemplus.data.dao;
 
-import java.sql.SQLException;
-
 public interface DAO<B, T> {
 
     void createTable();
@@ -10,7 +8,7 @@ public interface DAO<B, T> {
 
     void loadAll();
 
-    void load(B object) throws SQLException;
+    void load(B object);
 
     void save(T object);
 

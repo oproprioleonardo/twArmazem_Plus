@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.data.dao;
 
+import me.nullpointer.twarmazemplus.cache.BonusC;
 import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.cache.PlayerC;
 import me.nullpointer.twarmazemplus.data.ConnectionFactory;
@@ -41,7 +42,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
             result.next();
             final List<DropPlayer> dropPlayer = new ArrayList<>();
             Arrays.asList(result.getString("Drops").split(",")).forEach(s -> dropPlayer.add(new DropPlayer(s.split(":")[0], Double.parseDouble(s.split(":")[1]))));
-            final Armazem armazem = new Armazem(owner, result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, result.getString("Friends").equalsIgnoreCase("") ? new ArrayList<>() : Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
+            final Armazem armazem = new Armazem(owner, result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, result.getString("Friends").equalsIgnoreCase("") ? new ArrayList<>() : Arrays.asList(result.getString("Friends").split(",")), BonusC.get(Bukkit.getPlayer(owner)));
             PlayerC.put(armazem);
             connection.close();
         } catch (SQLException e) {
@@ -60,12 +61,12 @@ public class ManagerDAO implements DAO<String, Armazem> {
             st.setString(1, armazem.getOwner());
             st.setDouble(2, armazem.getLimit());
             st.setDouble(3, armazem.getOriginalMultiplier());
-            st.setString(4, armazem.getFriends().toString());
+            st.setString(4, armazem.getFriends().toString().replace(" ", "").replace("[", "").replace("]", ""));
             st.setString(5, stringBuilder.toString());
             st.setString(6, armazem.getOwner());
             st.setDouble(7, armazem.getLimit());
             st.setDouble(8, armazem.getOriginalMultiplier());
-            st.setString(9, armazem.getFriends().toString());
+            st.setString(9, armazem.getFriends().toString().replace(" ", "").replace("[", "").replace("]", ""));
             st.setString(10, stringBuilder.toString());
             st.executeUpdate();
             connection.close();
@@ -86,12 +87,12 @@ public class ManagerDAO implements DAO<String, Armazem> {
                 st.setString(1, armazem.getOwner());
                 st.setDouble(2, armazem.getLimit());
                 st.setDouble(3, armazem.getOriginalMultiplier());
-                st.setString(4, armazem.getFriends().toString());
+                st.setString(4, armazem.getFriends().toString().replace(" ", "").replace("[", "").replace("]", ""));
                 st.setString(5, stringBuilder.toString());
                 st.setString(6, armazem.getOwner());
                 st.setDouble(7, armazem.getLimit());
                 st.setDouble(8, armazem.getOriginalMultiplier());
-                st.setString(9, armazem.getFriends().toString());
+                st.setString(9, armazem.getFriends().toString().replace(" ", "").replace("[", "").replace("]", ""));
                 st.setString(10, stringBuilder.toString());
                 st.executeUpdate();
             }
@@ -116,7 +117,7 @@ public class ManagerDAO implements DAO<String, Armazem> {
                             dropPlayer.add(new DropPlayer(s.split(":")[0], Double.parseDouble(s.split(":")[1])));
                         }
                     });
-                    final Armazem armazem = new Armazem(result.getString("Owner"), result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, Arrays.asList(result.getString("Friends").replaceAll(" ", "").replace("]", "").replace("[", "").split(",")));
+                    final Armazem armazem = new Armazem(result.getString("Owner"), result.getDouble("Limite"), result.getDouble("Multiplier"), new ArrayList<>(), dropPlayer, Arrays.asList(result.getString("Friends").split(",")), BonusC.get(Bukkit.getPlayer(result.getString("Owner"))));
                     PlayerC.put(armazem);
                 }
             }

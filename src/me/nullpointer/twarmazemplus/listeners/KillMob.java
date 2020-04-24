@@ -10,7 +10,6 @@ import me.nullpointer.twarmazemplus.utils.Configuration;
 import me.nullpointer.twarmazemplus.utils.Settings;
 import me.nullpointer.twarmazemplus.utils.Utils;
 import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
-import me.nullpointer.twarmazemplus.utils.armazem.BoosterPlayer;
 import me.nullpointer.twarmazemplus.utils.armazem.DropPlayer;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import org.bukkit.entity.Entity;
@@ -55,8 +54,8 @@ public class KillMob implements Listener {
                         else dropPlayer.addDropAmount(add);
                         Utils.sendActionBar(p, configuration.getMessage("drops-add").replace("{amount}", Utils.format(add)).replace("{drop-type}", ItemName.valueOf(drop.getDrop()).getName()));
                     } else Utils.sendActionBar(p, configuration.getMessage("armazem-max"));
-                    if (armazem.isAutoSell()){
-                        if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer());
+                    if (armazem.isAutoSell()) {
+                        if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer(), armazem);
                     }
                     e.getDrops().clear();
                     return;

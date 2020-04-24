@@ -31,11 +31,11 @@ public class CmdLimit extends BukkitCommand {
             }
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("ajuda") || args[0].equalsIgnoreCase("help")) {
-                s.sendMessage("&aComandos Armazém - Sistema de limite de venda");
+                s.sendMessage("§aComandos Armazém - Sistema de limite de venda");
                 s.sendMessage("");
-                s.sendMessage("&a/limitedevenda - Mostra seu limite de venda atual.");
-                s.sendMessage("&a/limitedevenda ajuda - Mostra os comandos do sistema.");
-                if (s.hasPermission("armazem.admin")) s.sendMessage("&a/limitedevenda give (player) (id) (amount)");
+                s.sendMessage("§a/limitedevenda - Mostra seu limite de venda atual.");
+                s.sendMessage("§a/limitedevenda ajuda - Mostra os comandos do sistema.");
+                if (s.hasPermission("armazem.admin")) s.sendMessage("§a/limitedevenda give (player) (id) (amount)");
             } else Bukkit.dispatchCommand(s, "limitedevenda ajuda");
         } else if (args.length == 4) {
             final Configuration configuration = API.getConfiguration();

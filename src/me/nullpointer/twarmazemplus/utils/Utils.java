@@ -100,7 +100,7 @@ public class Utils {
             if (itemStack.isSimilar(itemStack1) && itemStack1.getAmount() < stackMax) {
                 if (itemStack1.getAmount() + amount <= stackMax) {
                     itemStack1.setAmount(itemStack1.getAmount() + amount);
-                    break;
+                    return;
                 }
                 int add = amount - (amount + itemStack1.getAmount() - stackMax);
                 itemStack1.setAmount(stackMax);

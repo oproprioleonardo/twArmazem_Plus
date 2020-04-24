@@ -33,11 +33,11 @@ public class CmdBooster extends BukkitCommand {
             }
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("ajuda") || args[0].equalsIgnoreCase("help")) {
-                s.sendMessage("&aComandos Armazém - Sistema de Boosters");
+                s.sendMessage("§aComandos Armazém - Sistema de Boosters");
                 s.sendMessage("");
-                s.sendMessage("&a/booster - Mostra seu multiplicador atual.");
-                s.sendMessage("&a/booster ajuda - Mostra os comandos do sistema.");
-                if (s.hasPermission("armazem.admin")) s.sendMessage("&a/booster give (player) (id) (amount)");
+                s.sendMessage("§a/booster - Mostra seu multiplicador atual.");
+                s.sendMessage("§a/booster ajuda - Mostra os comandos do sistema.");
+                if (s.hasPermission("armazem.admin")) s.sendMessage("§a/booster give (player) (id) (amount)");
             } else Bukkit.dispatchCommand(s, "booster ajuda");
         } else if (args.length == 4) {
             final Configuration configuration = API.getConfiguration();

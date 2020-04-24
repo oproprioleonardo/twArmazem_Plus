@@ -40,7 +40,7 @@ public class PlayerC {
                 final Configuration configuration = API.getConfiguration();
                 final List<DropPlayer> drops = new ArrayList<>();
                 DropC.drops.forEach(drop -> drops.add(new DropPlayer(drop.getKeyDrop(), 0D)));
-                final Armazem armazem = new Armazem(p.getName().toLowerCase(), Double.valueOf(configuration.getList("Limits.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), Double.valueOf(configuration.getList("Boosters.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), new ArrayList<>(), drops, new ArrayList<>());
+                final Armazem armazem = new Armazem(p.getName().toLowerCase(), Double.valueOf(configuration.getList("Limits.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), Double.valueOf(configuration.getList("Boosters.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), new ArrayList<>(), drops, new ArrayList<>(), BonusC.get(p));
                 put(armazem);
             }
         }

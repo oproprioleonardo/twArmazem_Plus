@@ -8,7 +8,6 @@ import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.cache.PlayerC;
 import me.nullpointer.twarmazemplus.enums.DropType;
 import me.nullpointer.twarmazemplus.utils.armazem.Armazem;
-import me.nullpointer.twarmazemplus.utils.armazem.BoosterPlayer;
 import me.nullpointer.twarmazemplus.utils.armazem.DropPlayer;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 import org.bukkit.Bukkit;
@@ -42,8 +41,8 @@ public class SpawnItem implements Listener {
                                         dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                                     else dropPlayer.addDropAmount(add);
                                 }
-                                if (armazem.isAutoSell()){
-                                    if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer());
+                                if (armazem.isAutoSell()) {
+                                    if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer(), armazem);
                                 }
                                 e.setCancelled(true);
                                 item.remove();
