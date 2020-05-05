@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/.gitignore
+.idea/artifacts/
+.idea/codeStyles/
+.idea/dbnavigator.xml
+.idea/dictionaries/
+.idea/libraries/
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+out/

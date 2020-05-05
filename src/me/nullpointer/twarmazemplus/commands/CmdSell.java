@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class CmdSell extends BukkitCommand {
 
     public CmdSell() {
-        super("vender", "Comando de vender drops", "/vender", Arrays.asList("armazem", "drops", "sell"));
+        super("armazem", "Comando de vender drops", "/armazem", Arrays.asList("vender", "drops", "sell"));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CmdSell extends BukkitCommand {
                     dropPlayer.sell(p, armazem);
                 });
             }
-            Bukkit.dispatchCommand(p, "vender " + armazem.getOwner());
+            Bukkit.dispatchCommand(p, "armazem " + armazem.getOwner());
         }));
         path = "Inventory.sell.items.autoSell.";
         inventoryBuilder.setItem(configuration.getInt(path + "slot"), new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true).replace("{playername}", p.getName())).setSkullUrl(configuration.get(path + "skull-url", false)).setSkullOwner(configuration.get(path + "skull-owner", true).replace("{playername}", p.getName())).lore(configuration.getList(path + "lore", true).stream().map(s1 -> s1.replace("{state}", armazem.isAutoSellResult()).replace("{future-state}", "" + (!armazem.isAutoSell() ? "ativar" : "desativar"))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
@@ -78,7 +78,7 @@ public class CmdSell extends BukkitCommand {
                 return;
             }
             armazem.setAutoSell(!armazem.isAutoSell());
-            Bukkit.dispatchCommand(p, "vender " + armazem.getOwner());
+            Bukkit.dispatchCommand(p, "armazem " + armazem.getOwner());
         }));
         final List<DropPlayer> dropsPlayer = armazem.getDropPlayers().stream().filter(dropPlayer -> dropPlayer.getDropAmount() > 0).collect(Collectors.toList());
         if (dropsPlayer.size() != 0) {
@@ -92,7 +92,7 @@ public class CmdSell extends BukkitCommand {
                         Utils.sendActionBar(p, configuration.getMessage("drops-sell").replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{item}", ItemName.valueOf(drop.getDrop()).getName()).replace("{price}", Utils.format(dropPlayer.getDropAmount() * drop.getUnitPrice() + (dropPlayer.getDropAmount() * drop.getUnitPrice() * armazem.getBonus() / 100))));
                         dropPlayer.sell(p, armazem);
                     }
-                    Bukkit.dispatchCommand(p, "vender " + armazem.getOwner());
+                    Bukkit.dispatchCommand(p, "armazem " + armazem.getOwner());
                 }));
             }
         }

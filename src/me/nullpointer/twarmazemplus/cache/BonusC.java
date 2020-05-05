@@ -14,10 +14,8 @@ public class BonusC {
     }
 
     public static Integer get(Player p) {
-        try {
-            return bonus.get(bonus.keySet().stream().filter(p::hasPermission).findFirst().orElseGet(() -> bonus.keySet().stream().findFirst().get()));
-        } catch (Exception e) {
-            return 0;
-        }
+        if (bonus.keySet().stream().anyMatch(p::hasPermission))
+            return bonus.get(bonus.keySet().stream().filter(p::hasPermission).findFirst().get());
+        else return 0;
     }
 }

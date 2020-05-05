@@ -40,7 +40,7 @@ public class PlayerC {
                 final Configuration configuration = API.getConfiguration();
                 final List<DropPlayer> drops = new ArrayList<>();
                 DropC.drops.forEach(drop -> drops.add(new DropPlayer(drop.getKeyDrop(), 0D)));
-                final Armazem armazem = new Armazem(p.getName().toLowerCase(), Double.valueOf(configuration.getList("Limits.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), Double.valueOf(configuration.getList("Boosters.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElseGet(() -> "0").split(":")[1]), new ArrayList<>(), drops, new ArrayList<>(), BonusC.get(p));
+                final Armazem armazem = new Armazem(p.getName().toLowerCase(), Double.valueOf(configuration.getList("Limits.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElse("0:0").split(":")[1]), Double.valueOf(configuration.getList("Boosters.default", false).stream().filter(s -> p.hasPermission(s.split(":")[0])).findFirst().orElse("0:1.0").split(":")[1]), new ArrayList<>(), drops, new ArrayList<>(), BonusC.get(p));
                 put(armazem);
             }
         }
@@ -57,7 +57,7 @@ public class PlayerC {
     }
 
     public static Armazem get(String owner) {
-        return armazens.stream().filter(armazem -> armazem.getOwner().equalsIgnoreCase(owner.toLowerCase())).findFirst().orElseGet(() -> armazens.get(0));
+        return armazens.stream().filter(armazem -> armazem.getOwner().equalsIgnoreCase(owner.toLowerCase())).findFirst().get();
     }
 
 }
