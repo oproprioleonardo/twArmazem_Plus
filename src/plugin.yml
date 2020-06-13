@@ -1,5 +1,5 @@
 name: twArmazem_Plus
 main: me.nullpointer.twarmazemplus.Main
-version: 2.4.9
+version: 2.5.0
 authors: [Dev_NullPointer]
 softdepend: [PlotSquared, Vault]
