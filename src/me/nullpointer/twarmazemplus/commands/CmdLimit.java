@@ -40,6 +40,10 @@ public class CmdLimit extends BukkitCommand {
         } else if (args.length == 4) {
             final Configuration configuration = API.getConfiguration();
             if (args[0].equalsIgnoreCase("give")) {
+                if (!s.hasPermission("armazem.admin")){
+                    s.sendMessage(configuration.getMessage("permission-error"));
+                    return true;
+                }
                 if (Bukkit.getPlayer(args[1]) == null) {
                     s.sendMessage(configuration.getMessage("player-offline"));
                     return true;
