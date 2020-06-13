@@ -28,6 +28,10 @@ Messages:
   friends-remove: "&cVocê retirou o acesso de {player} do seu armazém."
   friends-add: "&aVocê deu acesso do seu armazém para o jogador {player}."
   friends-max: "&cVocê atingiu ao limite máximo de amigos."
+  can-collect: "&7Digite a quantidade que deseja coletar."
+  cancel: "&cOperação cancelada com sucesso."
+  drop-insufficient: "&cVocê não tem drops suficientes para essa operação."
+  space-insufficient: "&cVocê não tem espaço suficiente no seu inventário."
 Settings:
   #NÃO SUPORTA KILL-STEP
   stack-mobs: JH_StackMobs #O plugin suporta "JH_StackMobs" e "StackMobs" (spigot)

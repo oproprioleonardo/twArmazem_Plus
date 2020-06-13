@@ -4,6 +4,7 @@ import me.nullpointer.twarmazemplus.Main;
 import me.nullpointer.twarmazemplus.api.API;
 import me.nullpointer.twarmazemplus.cache.DropC;
 import me.nullpointer.twarmazemplus.cache.PlayerC;
+import me.nullpointer.twarmazemplus.cache.temporary.CollectC;
 import me.nullpointer.twarmazemplus.enums.translate.ItemName;
 import me.nullpointer.twarmazemplus.utils.Configuration;
 import me.nullpointer.twarmazemplus.utils.InventoryBuilder;
@@ -17,6 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,6 +91,11 @@ public class CmdSell extends BukkitCommand {
                 final List<String> lore = drop.getMenuItem().getItemMeta().getLore();
                 inventoryBuilder.setItem(slots.get(count), new Item(drop.getMenuItem().build().clone()).lore(lore.stream().map(s1 -> s1.replace("{price-sell-unit}", Utils.format(drop.getUnitPrice() + (drop.getUnitPrice() * armazem.getBonus() / 100))).replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{price-sell-all}", Utils.format(drop.getUnitPrice() * dropPlayer.getDropAmount() + (drop.getUnitPrice() * dropPlayer.getDropAmount() * armazem.getBonus() / 100)))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
                     if (dropPlayer.getDropAmount() > 0) {
+                        if (inventoryClickEvent.getClick() == ClickType.RIGHT && drop.isCanCollect()){
+                            p.sendMessage(configuration.getMessage("can-collect"));
+                            CollectC.add(p, drop.getDrop());
+                            return;
+                        }
                         Utils.sendActionBar(p, configuration.getMessage("drops-sell").replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{item}", ItemName.valueOf(drop.getDrop()).getName()).replace("{price}", Utils.format(dropPlayer.getDropAmount() * drop.getUnitPrice() + (dropPlayer.getDropAmount() * drop.getUnitPrice() * armazem.getBonus() / 100))));
                         dropPlayer.sell(p, armazem);
                     }

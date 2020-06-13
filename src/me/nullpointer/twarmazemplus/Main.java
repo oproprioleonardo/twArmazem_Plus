@@ -57,14 +57,15 @@ public class Main extends JavaPlugin {
             final Limit limit = new Limit(s, new Item(Material.getMaterial(configuration.getInt(path + "id")), 1, configuration.getInt(path + "data").shortValue()).name(configuration.get(path + "name", true)).lore(configuration.getList(path + "lore", true)).build(), configuration.getDouble(path + "value"), configuration.get(path + "permission", false));
             LimitsC.put(limit);
         });
-        configuration.section("Bonus").forEach(s -> BonusC.put(s.replace("-", "."), configuration.getInt("Bonus."+s)));
+        configuration.section("Bonus").forEach(s -> BonusC.put(s.replace("-", "."), configuration.getInt("Bonus." + s)));
         final ManagerDAO dao = new ManagerDAO();
         dao.createTable();
         dao.loadAll();
         final Settings settings = API.getSettings();
-        Bukkit.getPluginManager().registerEvents(new SaveEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new SaveListeners(), this);
         Bukkit.getPluginManager().registerEvents(new Interact(), this);
         Bukkit.getPluginManager().registerEvents(new ChunkLoad(), this);
+        Bukkit.getPluginManager().registerEvents(new TalkToCollect(), this);
         if (settings.isBreakBlock()) Bukkit.getPluginManager().registerEvents(new BreakBlock(), this);
         if (settings.isKillMob()) {
             Bukkit.getPluginManager().registerEvents(new KillMob(), this);

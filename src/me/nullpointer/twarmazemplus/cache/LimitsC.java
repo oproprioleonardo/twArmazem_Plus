@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
+import com.google.common.collect.Lists;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Limit;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class LimitsC {
 
-    public static List<Limit> limits = new ArrayList<>();
+    public static List<Limit> limits = Lists.newArrayList();
 
     public static void put(Limit limit) {
         limits.add(limit);

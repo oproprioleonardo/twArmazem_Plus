@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
+import com.google.common.collect.Lists;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Booster;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class BoosterC {
 
-    public static List<Booster> boosters = new ArrayList<>();
+    public static List<Booster> boosters = Lists.newArrayList();
 
     public static void put(Booster booster) {
         boosters.add(booster);

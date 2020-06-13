@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
+import com.google.common.collect.Lists;
 import me.nullpointer.twarmazemplus.utils.armazem.supliers.Drop;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class DropC {
 
-    public static List<Drop> drops = new ArrayList<>();
+    public static List<Drop> drops = Lists.newArrayList();
 
     public static void put(Drop drop) {
         drops.add(drop);

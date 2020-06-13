@@ -4,14 +4,14 @@ import me.nullpointer.twarmazemplus.enums.StackMob;
 
 public class Settings {
 
-    private StackMob stackMob;
-    private boolean breakBlock;
-    private boolean killMob;
-    private boolean plotDrop;
-    private boolean friends;
-    private int friendsMax;
-    private Double limitMax;
-    private String worldPlot;
+    private final StackMob stackMob;
+    private final boolean breakBlock;
+    private final boolean killMob;
+    private final boolean plotDrop;
+    private final boolean friends;
+    private final int friendsMax;
+    private final Double limitMax;
+    private final String worldPlot;
 
     public Settings(Configuration configuration) {
         stackMob = StackMob.valueOf(configuration.get("Settings.stack-mobs", false));

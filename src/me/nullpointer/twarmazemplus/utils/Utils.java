@@ -6,6 +6,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.math.RoundingMode;
@@ -88,8 +89,8 @@ public class Utils {
     }
 
     /**
-     * @param p         Player online!
-     * @param itemStack Hรก suporte para todos os itens
+     * @param p Player online!
+     * @param itemStack Há suporte para todos os itens
      */
     public static void giveItem(final Player p, final ItemStack itemStack, Integer amount) {
         final int stackMax = itemStack.getMaxStackSize();
@@ -127,5 +128,19 @@ public class Utils {
                 p.getInventory().addItem(newItem);
             } else p.getWorld().dropItem(p.getLocation(), newItem);
         }
+    }
+
+    public static boolean haveSpace(final Inventory inventory, final ItemStack itemStack, Integer amount) {
+        final int stackMax = itemStack.getMaxStackSize();
+        for (ItemStack itemStack1 : inventory.getContents()) {
+            if (itemStack1 == null) {
+                amount -= stackMax;
+                continue;
+            }
+            if (itemStack1.isSimilar(itemStack)) {
+                amount -= stackMax - itemStack1.getAmount();
+            }
+        }
+        return amount <= 0;
     }
 }

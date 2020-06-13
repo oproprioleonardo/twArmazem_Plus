@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
@@ -40,7 +39,7 @@ public class CmdLimit extends BukkitCommand {
         } else if (args.length == 4) {
             final Configuration configuration = API.getConfiguration();
             if (args[0].equalsIgnoreCase("give")) {
-                if (!s.hasPermission("armazem.admin")){
+                if (!s.hasPermission("armazem.admin")) {
                     s.sendMessage(configuration.getMessage("permission-error"));
                     return true;
                 }

@@ -1,5 +1,6 @@
 package me.nullpointer.twarmazemplus.cache;
 
+import com.google.common.collect.Lists;
 import me.nullpointer.twarmazemplus.api.API;
 import me.nullpointer.twarmazemplus.data.dao.ManagerDAO;
 import me.nullpointer.twarmazemplus.utils.Configuration;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class PlayerC {
 
-    public static List<Armazem> armazens = new ArrayList<>();
+    public static List<Armazem> armazens = Lists.newArrayList();
 
     public static void put(Armazem armazem) {
         armazens.add(armazem);
