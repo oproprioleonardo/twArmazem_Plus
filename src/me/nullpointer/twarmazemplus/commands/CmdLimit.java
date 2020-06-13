@@ -52,11 +52,9 @@ public class CmdLimit extends BukkitCommand {
                     if (limit.getKey().equalsIgnoreCase(args[2])) {
                         if (StringUtils.isNumeric(args[3])) {
                             final int number = Integer.parseInt(args[3]);
-                            final ItemStack itemStack = limit.getItemStack();
-                            itemStack.setAmount(number);
                             s.sendMessage(configuration.getMessage("limit-gived").replace("{type}", limit.getKey()).replace("{player}", args[1]));
                             final Player player = Bukkit.getPlayer(args[1]);
-                            Utils.giveItem(player, itemStack);
+                            Utils.giveItem(player, limit.getItemStack().clone(), number);
                             return true;
                         } else s.sendMessage(configuration.getMessage("number-invalid"));
                         return true;

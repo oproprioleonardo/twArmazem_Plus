@@ -91,9 +91,8 @@ public class Utils {
      * @param p         Player online!
      * @param itemStack Hรก suporte para todos os itens
      */
-    public static void giveItem(final Player p, final ItemStack itemStack) {
-        int amount = itemStack.getAmount();
-        int stackMax = itemStack.getMaxStackSize();
+    public static void giveItem(final Player p, final ItemStack itemStack, Integer amount) {
+        final int stackMax = itemStack.getMaxStackSize();
         for (ItemStack itemStack1 : p.getInventory().getContents()) {
             if (itemStack1 == null) continue;
             if (amount == 0) return;
@@ -102,14 +101,31 @@ public class Utils {
                     itemStack1.setAmount(itemStack1.getAmount() + amount);
                     return;
                 }
-                int add = amount - (amount + itemStack1.getAmount() - stackMax);
                 itemStack1.setAmount(stackMax);
-                amount -= add;
+                amount -= amount - (amount + itemStack1.getAmount() - stackMax);
             }
         }
-        itemStack.setAmount(amount);
+        if (amount == 0) return;
+        if (amount <= stackMax) {
+            itemStack.setAmount(amount);
+            if (p.getInventory().firstEmpty() != -1) {
+                p.getInventory().addItem(itemStack);
+            } else p.getWorld().dropItem(p.getLocation(), itemStack);
+            return;
+        }
+        final int items = amount / stackMax;
+        final int rest = amount % stackMax;
+        final ItemStack newItemStack = itemStack.clone();
+        newItemStack.setAmount(rest);
         if (p.getInventory().firstEmpty() != -1) {
-            p.getInventory().addItem(itemStack);
-        } else p.getWorld().dropItem(p.getLocation(), itemStack);
+            p.getInventory().addItem(newItemStack);
+        } else p.getWorld().dropItem(p.getLocation(), newItemStack);
+        for (int item = items; item > 0; item--) {
+            final ItemStack newItem = itemStack.clone();
+            newItem.setAmount(stackMax);
+            if (p.getInventory().firstEmpty() != -1) {
+                p.getInventory().addItem(newItem);
+            } else p.getWorld().dropItem(p.getLocation(), newItem);
+        }
     }
 }

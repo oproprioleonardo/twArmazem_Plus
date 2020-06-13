@@ -7,20 +7,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class Drop {
 
-    private String keyDrop;
-    private DropType type;
-    private ItemStack drop;
-    private EntityType entityType;
-    private Double unitPrice;
-    private Item menuItem;
+    private final String keyDrop;
+    private final DropType type;
+    private final ItemStack drop;
+    private final EntityType entityType;
+    private final Double unitPrice;
+    private final Item menuItem;
+    private final boolean canCollect;
 
-    public Drop(String keyDrop, DropType type, ItemStack drop, EntityType entityType, Double unitPrice, Item menuItem) {
+    public Drop(String keyDrop, DropType type, ItemStack drop, EntityType entityType, Double unitPrice, Item menuItem, boolean canCollect) {
         this.keyDrop = keyDrop;
         this.type = type;
         this.drop = drop;
         this.entityType = entityType;
         this.unitPrice = unitPrice;
         this.menuItem = menuItem;
+        this.canCollect = canCollect;
     }
 
     public EntityType getEntityType() {
@@ -45,5 +47,9 @@ public class Drop {
 
     public Item getMenuItem() {
         return menuItem;
+    }
+
+    public boolean isCanCollect() {
+        return canCollect;
     }
 }

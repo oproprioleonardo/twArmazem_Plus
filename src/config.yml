@@ -88,6 +88,7 @@ Drops:
     data: 0
     unit-sales-value: "100M"
     type: BREAK #suporta BREAK, PLOT_DROP, KILL
+    canCollect: false # Coletar do /drops
     drop-item-menu:
       id: 57
       data: 0
@@ -103,6 +104,7 @@ Drops:
     mob: ZOMBIE
     unit-sales-value: "100M,10K"
     type: KILL
+    canCollect: false
     drop-item-menu:
       id: 277
       data: 0
@@ -117,6 +119,7 @@ Drops:
     data: 0
     unit-sales-value: "100B,10M,10K"
     type: PLOT_DROP
+    canCollect: true
     drop-item-menu:
       id: 81
       data: 0
