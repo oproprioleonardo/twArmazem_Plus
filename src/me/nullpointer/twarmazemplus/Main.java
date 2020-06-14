@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        economy = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class).getProvider();
+        economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
         new API();
         final Configuration configuration = API.getConfiguration();
         configuration.section("Drops").forEach(s -> {
@@ -58,9 +58,15 @@ public class Main extends JavaPlugin {
             LimitsC.put(limit);
         });
         configuration.section("Bonus").forEach(s -> BonusC.put(s.replace("-", "."), configuration.getInt("Bonus." + s)));
-        final ManagerDAO dao = new ManagerDAO();
-        dao.createTable();
-        dao.loadAll();
+        try {
+            final ManagerDAO dao = new ManagerDAO();
+            dao.createTable();
+            dao.loadAll();
+        }catch (Exception ignored){
+            Bukkit.getConsoleSender().sendMessage("§ctwArmazem_Plus -> Não foi possível estabelecer conexão com o banco de dados.");
+            Bukkit.getPluginManager().disablePlugin(instance);
+            return;
+        }
         final Settings settings = API.getSettings();
         Bukkit.getPluginManager().registerEvents(new SaveListeners(), this);
         Bukkit.getPluginManager().registerEvents(new Interact(), this);
@@ -81,6 +87,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        new ManagerDAO().saveAll();
+        try {
+            new ManagerDAO().saveAll();
+        }catch (Exception ignored){
+        }
     }
 }
