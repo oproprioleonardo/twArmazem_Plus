@@ -21,7 +21,7 @@ public class TalkToCollect implements Listener {
         final Player p = e.getPlayer();
         final String message = e.getMessage();
         final Configuration configuration = API.getConfiguration();
-        if (CollectC.has(p)) return;
+        if (!CollectC.has(p)) return;
         e.setCancelled(true);
         final ItemStack drop = CollectC.getDrop(p);
         if (message.equalsIgnoreCase("cancelar")){

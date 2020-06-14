@@ -1,6 +1,6 @@
-name: Armazem_Plus
+name: RiverArmazem_Plus
 main: me.nullpointer.armazemplus.Main
-version: 2.5.0
+version: 2.5.1
 author: Dev_NullPointer
 description: Plugin feito por desenvolvedor da equipe RiverTech
 softdepend: [PlotSquared, Vault]
