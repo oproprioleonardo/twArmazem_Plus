@@ -64,8 +64,7 @@ public class Main extends JavaPlugin {
             dao.loadAll();
         }catch (Exception ignored){
             Bukkit.getConsoleSender().sendMessage("§ctwArmazem_Plus -> Não foi possível estabelecer conexão com o banco de dados.");
-            Bukkit.getPluginManager().disablePlugin(instance);
-            return;
+            Bukkit.getConsoleSender().sendMessage("§cO plugin não irá funcionar como desejado.");
         }
         final Settings settings = API.getSettings();
         Bukkit.getPluginManager().registerEvents(new SaveListeners(), this);

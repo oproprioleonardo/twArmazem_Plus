@@ -2,5 +2,5 @@ name: twArmazem_Plus
 main: me.nullpointer.armazemplus.Main
 version: 2.5.1
 author: Dev_NullPointer
-description: Plugin feito por desenvolvedor da equipe RiverTech
+description: Plugin desenvolvido por Leonardo
 softdepend: [PlotSquared, Vault]
