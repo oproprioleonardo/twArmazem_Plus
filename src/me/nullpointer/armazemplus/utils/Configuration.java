@@ -65,6 +65,15 @@ public class Configuration {
         return config.getBoolean(path);
     }
 
+    public Boolean isDouble(String path){
+        try {
+            config.getDouble(path);
+            return true;
+        }catch (Exception ignored){
+            return false;
+        }
+    }
+
     public Integer getInt(String path) {
         if (has(path)) return config.getInt(path);
         else return 0;

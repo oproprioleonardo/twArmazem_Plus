@@ -23,4 +23,9 @@ public class API {
     public static Settings getSettings() {
         return settings;
     }
+
+    //todo fazer api
+    //todo fazer eventos para desenvolvedores
+    //todo adicionar preço de venda por rank
+    //hook scoreboard
 }
