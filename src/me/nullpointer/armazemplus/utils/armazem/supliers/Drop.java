@@ -14,8 +14,9 @@ public class Drop {
     private final Double unitPrice;
     private final Item menuItem;
     private final boolean canCollect;
+    private final boolean canSell;
 
-    public Drop(String keyDrop, DropType type, ItemStack drop, EntityType entityType, Double unitPrice, Item menuItem, boolean canCollect) {
+    public Drop(String keyDrop, DropType type, ItemStack drop, EntityType entityType, Double unitPrice, Item menuItem, boolean canCollect, boolean canSell) {
         this.keyDrop = keyDrop;
         this.type = type;
         this.drop = drop;
@@ -23,6 +24,7 @@ public class Drop {
         this.unitPrice = unitPrice;
         this.menuItem = menuItem;
         this.canCollect = canCollect;
+        this.canSell = canSell;
     }
 
     public EntityType getEntityType() {
@@ -51,5 +53,9 @@ public class Drop {
 
     public boolean isCanCollect() {
         return canCollect;
+    }
+
+    public boolean isCanSell() {
+        return canSell;
     }
 }

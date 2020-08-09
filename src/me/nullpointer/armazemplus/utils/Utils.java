@@ -95,15 +95,15 @@ public class Utils {
     public static void giveItem(final Player p, final ItemStack itemStack, Integer amount) {
         final int stackMax = itemStack.getMaxStackSize();
         for (ItemStack itemStack1 : p.getInventory().getContents()) {
-            if (itemStack1 == null) continue;
             if (amount == 0) return;
+            if (itemStack1 == null) continue;
             if (itemStack.isSimilar(itemStack1) && itemStack1.getAmount() < stackMax) {
                 if (itemStack1.getAmount() + amount <= stackMax) {
                     itemStack1.setAmount(itemStack1.getAmount() + amount);
                     return;
                 }
+                amount = amount + itemStack1.getAmount() - stackMax;
                 itemStack1.setAmount(stackMax);
-                amount -= amount - (amount + itemStack1.getAmount() - stackMax);
             }
         }
         if (amount == 0) return;

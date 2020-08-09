@@ -31,7 +31,6 @@ import java.util.function.Consumer;
 
 public class InventoryBuilder implements Listener {
 
-    public static HashMap<String, Location> debug = Maps.newHashMap();
     private Inventory inventory;
     private HashMap<Integer, Item> items = Maps.newHashMap();
     private HashMap<Integer, Character> pattern = Maps.newHashMap();
@@ -147,9 +146,7 @@ public class InventoryBuilder implements Listener {
         if (clickEventConsumer != null) {
             if (event.getClickedInventory() == null) return;
             if (!event.getWhoClicked().getOpenInventory().getTopInventory().equals(inventory)) return;
-            if (event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
-                clickEventConsumer.accept(event);
-            }
+            if (event.getClickedInventory().equals(event.getWhoClicked().getInventory())) clickEventConsumer.accept(event);
         }
         if (this.inventory == null) return;
         if (this.inventory.equals(event.getInventory())) {

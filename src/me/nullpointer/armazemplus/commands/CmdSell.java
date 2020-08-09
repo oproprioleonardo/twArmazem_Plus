@@ -68,9 +68,7 @@ public class CmdSell extends BukkitCommand {
             }
             if (armazem.getAmountAll() > 0) {
                 Utils.sendActionBar(p, configuration.getMessage("drops-sellall").replace("{amount}", Utils.format(armazem.getAmountAll())).replace("{price}", Utils.format(armazem.getPriceAll() + (armazem.getPriceAll() * armazem.getBonus() / 100))));
-                armazem.getDropPlayers().forEach(dropPlayer -> {
-                    dropPlayer.sell(p, armazem);
-                });
+                armazem.getDropPlayers().stream().filter(dropPlayer -> DropC.get(dropPlayer.getKeyDrop()).isCanSell()).forEach(dropPlayer -> dropPlayer.sell(p, armazem));
             }
             Bukkit.dispatchCommand(p, "armazem " + armazem.getOwner());
         }));
@@ -91,7 +89,7 @@ public class CmdSell extends BukkitCommand {
                 final List<String> lore = drop.getMenuItem().getItemMeta().getLore();
                 inventoryBuilder.setItem(slots.get(count), new Item(drop.getMenuItem().build().clone()).lore(lore.stream().map(s1 -> s1.replace("{price-sell-unit}", Utils.format(drop.getUnitPrice() + (drop.getUnitPrice() * armazem.getBonus() / 100))).replace("{amount}", Utils.format(dropPlayer.getDropAmount())).replace("{price-sell-all}", Utils.format(drop.getUnitPrice() * dropPlayer.getDropAmount() + (drop.getUnitPrice() * dropPlayer.getDropAmount() * armazem.getBonus() / 100)))).collect(Collectors.toList())).onClick(inventoryClickEvent -> {
                     if (dropPlayer.getDropAmount() > 0) {
-                        if (inventoryClickEvent.getClick() == ClickType.RIGHT && drop.isCanCollect()){
+                        if ((inventoryClickEvent.getClick() == ClickType.RIGHT && drop.isCanCollect()) || (drop.isCanCollect() && !drop.isCanSell())){
                             p.sendMessage(configuration.getMessage("can-collect"));
                             CollectC.add(p, drop.getDrop());
                             return;

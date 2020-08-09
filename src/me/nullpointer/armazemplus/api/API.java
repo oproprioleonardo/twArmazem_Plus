@@ -27,5 +27,5 @@ public class API {
     //todo fazer api
     //todo fazer eventos para desenvolvedores
     //todo adicionar preço de venda por rank
-    //hook scoreboard
+    //todo hook scoreboard
 }

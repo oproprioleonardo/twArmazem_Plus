@@ -41,7 +41,7 @@ public class SpawnItem implements Listener {
                                         dropPlayer.addDropAmount(add - (armazem.getAmountAll() + add - armazem.getLimit()));
                                     else dropPlayer.addDropAmount(add);
                                 }
-                                if (armazem.isAutoSell()) {
+                                if (armazem.isAutoSell() && drop.isCanSell()) {
                                     if (dropPlayer.getDropAmount() > 0) dropPlayer.sell(p.getPlayer(), armazem);
                                 }
                                 e.setCancelled(true);

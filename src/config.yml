@@ -93,6 +93,7 @@ Drops:
     unit-sales-value: "100M"
     type: BREAK #suporta BREAK, PLOT_DROP, KILL
     canCollect: false # Coletar do /drops
+    canSell: true # Vender no /drops
     drop-item-menu:
       id: 57
       data: 0
@@ -109,6 +110,7 @@ Drops:
     unit-sales-value: "100M,10K"
     type: KILL
     canCollect: false
+    canSell: true
     drop-item-menu:
       id: 277
       data: 0
@@ -124,6 +126,7 @@ Drops:
     unit-sales-value: "100B,10M,10K"
     type: PLOT_DROP
     canCollect: true
+    canSell: false
     drop-item-menu:
       id: 81
       data: 0
